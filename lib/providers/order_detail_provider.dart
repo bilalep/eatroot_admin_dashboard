@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../models/order_details/order_detail.dart';
-import '../services/api_service.dart';
-import 'live_order_provider.dart';
+import 'package:tech_test/models/order_details/order_detail.dart';
+import 'package:tech_test/providers/live_order_provider.dart';
+import 'package:tech_test/services/api_service.dart';
 
 class OrderDetailsProvider extends ChangeNotifier {
   ApiService apiService = ApiService();
@@ -17,7 +16,7 @@ class OrderDetailsProvider extends ChangeNotifier {
 
   Future<void> getOrderDetailsFromId(int id) async {
     _loading = true;
-    ApiService apiService = ApiService();
+    final apiService = ApiService();
     notifyListeners();
     final tempOrderDetail = await apiService.getOrderDetailsFromId(id);
     if (tempOrderDetail != null) {
@@ -27,7 +26,8 @@ class OrderDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeOrderStatusBy1(BuildContext ctx, int currentStatus, int orderId) async {
+  Future<void> changeOrderStatusBy1(
+      BuildContext ctx, int currentStatus, int orderId) async {
     _loading = true;
     final liveOrderProvider =
         Provider.of<LiveOrderProvider>(ctx, listen: false);
@@ -43,7 +43,7 @@ class OrderDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  cancelOrder(BuildContext ctx, int orderId) async {
+  Future<void> cancelOrder(BuildContext ctx, int orderId) async {
     _loading = true;
     notifyListeners();
     final liveOrderProvider =

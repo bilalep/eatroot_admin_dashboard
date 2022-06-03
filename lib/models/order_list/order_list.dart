@@ -11,11 +11,11 @@ class OrderList extends Equatable {
 
   factory OrderList.fromMap(Map<String, dynamic> data) => OrderList(
         order: (data['data'] as List<dynamic>?)
-            ?.map((e) => Order.fromMap(e as Map<String, dynamic>))
+            ?.map((dynamic e) => Order.fromMap(e as Map<String, dynamic>))
             .toList(),
       );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'data': order?.map((e) => e.toMap()).toList(),
       };
 

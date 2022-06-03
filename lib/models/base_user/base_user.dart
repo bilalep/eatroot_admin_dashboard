@@ -2,13 +2,17 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'user.dart';
+import 'package:tech_test/models/base_user/user.dart';
 
 class BaseUser extends Equatable {
-  final User? user;
-  final String? token;
-
   const BaseUser({this.user, this.token});
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [BaseUser].
+  factory BaseUser.fromJson(String data) {
+    return BaseUser.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory BaseUser.fromMap(Map<String, dynamic> data) => BaseUser(
         user: data['user'] == null
@@ -17,17 +21,19 @@ class BaseUser extends Equatable {
         token: data['token'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? token;
+  final User? user;
+
+  @override
+  List<Object?> get props => [user, token];
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'user': user?.toMap(),
         'token': token,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [BaseUser].
-  factory BaseUser.fromJson(String data) {
-    return BaseUser.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -43,10 +49,4 @@ class BaseUser extends Equatable {
       token: token ?? this.token,
     );
   }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [user, token];
 }

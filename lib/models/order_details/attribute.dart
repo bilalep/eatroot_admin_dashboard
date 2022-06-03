@@ -3,13 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Attribute extends Equatable {
-  final int? id;
-  final int? attributeId;
-  final String? attribute;
-  final String? actualPrice;
-  final String? salesPrice;
-  final String? total;
-
   const Attribute({
     this.id,
     this.attributeId,
@@ -18,6 +11,13 @@ class Attribute extends Equatable {
     this.salesPrice,
     this.total,
   });
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Attribute].
+  factory Attribute.fromJson(String data) {
+    return Attribute.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory Attribute.fromMap(Map<String, dynamic> data) => Attribute(
         id: data['id'] as int?,
@@ -28,7 +28,29 @@ class Attribute extends Equatable {
         total: data['total'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? actualPrice;
+  final String? attribute;
+  final int? attributeId;
+  final int? id;
+  final String? salesPrice;
+  final String? total;
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      attributeId,
+      attribute,
+      actualPrice,
+      salesPrice,
+      total,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'attribute_id': attributeId,
         'attribute': attribute,
@@ -36,13 +58,6 @@ class Attribute extends Equatable {
         'sales_price': salesPrice,
         'total': total,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Attribute].
-  factory Attribute.fromJson(String data) {
-    return Attribute.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -65,20 +80,5 @@ class Attribute extends Equatable {
       salesPrice: salesPrice ?? this.salesPrice,
       total: total ?? this.total,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      attributeId,
-      attribute,
-      actualPrice,
-      salesPrice,
-      total,
-    ];
   }
 }

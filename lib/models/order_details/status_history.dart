@@ -3,17 +3,19 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class StatusHistory extends Equatable {
-  final int? id;
-  final int? statusId;
-  final String? statusLabel;
-  final String? time;
-
   const StatusHistory({
     this.id,
     this.statusId,
     this.statusLabel,
     this.time,
   });
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [StatusHistory]
+  factory StatusHistory.fromJson(String data) {
+    return StatusHistory.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory StatusHistory.fromMap(Map<String, dynamic> data) => StatusHistory(
         id: data['id'] as int?,
@@ -22,19 +24,23 @@ class StatusHistory extends Equatable {
         time: data['time'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final int? id;
+  final int? statusId;
+  final String? statusLabel;
+  final String? time;
+
+  @override
+  List<Object?> get props => [id, statusId, statusLabel, time];
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'status_id': statusId,
         'status_label': statusLabel,
         'time': time,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [StatusHistory].
-  factory StatusHistory.fromJson(String data) {
-    return StatusHistory.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -54,10 +60,4 @@ class StatusHistory extends Equatable {
       time: time ?? this.time,
     );
   }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [id, statusId, statusLabel, time];
 }

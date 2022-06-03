@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class PaymentMethod extends Equatable {
-  final int? id;
-  final String? method;
-  final int? delivery;
-  final int? pickup;
-
   const PaymentMethod({this.id, this.method, this.delivery, this.pickup});
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [PaymentMethod]
+  factory PaymentMethod.fromJson(String data) {
+    return PaymentMethod.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory PaymentMethod.fromMap(Map<String, dynamic> data) => PaymentMethod(
         id: data['id'] as int?,
@@ -17,19 +19,23 @@ class PaymentMethod extends Equatable {
         pickup: data['pickup'] as int?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final int? delivery;
+  final int? id;
+  final String? method;
+  final int? pickup;
+
+  @override
+  List<Object?> get props => [id, method, delivery, pickup];
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'method': method,
         'delivery': delivery,
         'pickup': pickup,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [PaymentMethod].
-  factory PaymentMethod.fromJson(String data) {
-    return PaymentMethod.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -49,10 +55,4 @@ class PaymentMethod extends Equatable {
       pickup: pickup ?? this.pickup,
     );
   }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [id, method, delivery, pickup];
 }

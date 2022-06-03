@@ -2,20 +2,10 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'outlet.dart';
-import 'restaurant.dart';
+import 'package:tech_test/models/base_user/outlet.dart';
+import 'package:tech_test/models/base_user/restaurant.dart';
 
 class User extends Equatable {
-  final int? id;
-  final String? name;
-  final String? email;
-  final String? mobile;
-  final String? role;
-  final String? status;
-  final bool? hasMultiRestaurants;
-  final Restaurant? restaurant;
-  final List<Outlet>? outlets;
-
   const User({
     this.id,
     this.name,
@@ -27,6 +17,13 @@ class User extends Equatable {
     this.restaurant,
     this.outlets,
   });
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [User].
+  factory User.fromJson(String data) {
+    return User.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory User.fromMap(Map<String, dynamic> data) => User(
         id: data['id'] as int?,
@@ -40,11 +37,39 @@ class User extends Equatable {
             ? null
             : Restaurant.fromMap(data['restaurant'] as Map<String, dynamic>),
         outlets: (data['outlets'] as List<dynamic>?)
-            ?.map((e) => Outlet.fromMap(e as Map<String, dynamic>))
+            ?.map((dynamic e) => Outlet.fromMap(e as Map<String, dynamic>))
             .toList(),
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? email;
+  final bool? hasMultiRestaurants;
+  final int? id;
+  final String? mobile;
+  final String? name;
+  final List<Outlet>? outlets;
+  final Restaurant? restaurant;
+  final String? role;
+  final String? status;
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      name,
+      email,
+      mobile,
+      role,
+      status,
+      hasMultiRestaurants,
+      restaurant,
+      outlets,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'name': name,
         'email': email,
@@ -55,13 +80,6 @@ class User extends Equatable {
         'restaurant': restaurant?.toMap(),
         'outlets': outlets?.map((e) => e.toMap()).toList(),
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [User].
-  factory User.fromJson(String data) {
-    return User.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -90,23 +108,5 @@ class User extends Equatable {
       restaurant: restaurant ?? this.restaurant,
       outlets: outlets ?? this.outlets,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      name,
-      email,
-      mobile,
-      role,
-      status,
-      hasMultiRestaurants,
-      restaurant,
-      outlets,
-    ];
   }
 }

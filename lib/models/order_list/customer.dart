@@ -3,12 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Customer extends Equatable {
-  final int? id;
-  final String? name;
-  final String? email;
-  final String? mobile;
-  final bool? regUser;
-
   const Customer({
     this.id,
     this.name,
@@ -16,6 +10,13 @@ class Customer extends Equatable {
     this.mobile,
     this.regUser,
   });
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Customer].
+  factory Customer.fromJson(String data) {
+    return Customer.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory Customer.fromMap(Map<String, dynamic> data) => Customer(
         id: data['id'] as int?,
@@ -25,20 +26,25 @@ class Customer extends Equatable {
         regUser: data['reg_user'] as bool?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? email;
+  final int? id;
+  final String? mobile;
+  final String? name;
+  final bool? regUser;
+
+  @override
+  List<Object?> get props => [id, name, email, mobile, regUser];
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'name': name,
         'email': email,
         'mobile': mobile,
         'reg_user': regUser,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Customer].
-  factory Customer.fromJson(String data) {
-    return Customer.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -60,10 +66,4 @@ class Customer extends Equatable {
       regUser: regUser ?? this.regUser,
     );
   }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [id, name, email, mobile, regUser];
 }

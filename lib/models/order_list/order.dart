@@ -2,25 +2,10 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'address.dart';
-import 'customer.dart';
+import 'package:tech_test/models/order_list/address.dart';
+import 'package:tech_test/models/order_list/customer.dart';
 
 class Order extends Equatable {
-  final int? id;
-  final String? orderNo;
-  final String? channel;
-  final dynamic preparationTime;
-  final String? orderingService;
-  final String? paymentMethod;
-  final String? status;
-  final String? orderAt;
-  final String? deliveryAt;
-  final Customer? customer;
-  final Address? address;
-  final dynamic discountCoupon;
-  final String? actualSubTotal;
-  final String? subTotal;
-
   const Order({
     this.id,
     this.orderNo,
@@ -37,6 +22,13 @@ class Order extends Equatable {
     this.actualSubTotal,
     this.subTotal,
   });
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Order].
+  factory Order.fromJson(String data) {
+    return Order.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory Order.fromMap(Map<String, dynamic> data) => Order(
         id: data['id'] as int?,
@@ -59,7 +51,45 @@ class Order extends Equatable {
         subTotal: data['sub_total'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? actualSubTotal;
+  final Address? address;
+  final String? channel;
+  final Customer? customer;
+  final String? deliveryAt;
+  final dynamic discountCoupon;
+  final int? id;
+  final String? orderAt;
+  final String? orderNo;
+  final String? orderingService;
+  final String? paymentMethod;
+  final dynamic preparationTime;
+  final String? status;
+  final String? subTotal;
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      orderNo,
+      channel,
+      preparationTime,
+      orderingService,
+      paymentMethod,
+      status,
+      orderAt,
+      deliveryAt,
+      customer,
+      address,
+      discountCoupon,
+      actualSubTotal,
+      subTotal,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'order_no': orderNo,
         'channel': channel,
@@ -75,13 +105,6 @@ class Order extends Equatable {
         'actual_sub_total': actualSubTotal,
         'sub_total': subTotal,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Order].
-  factory Order.fromJson(String data) {
-    return Order.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -120,28 +143,5 @@ class Order extends Equatable {
       actualSubTotal: actualSubTotal ?? this.actualSubTotal,
       subTotal: subTotal ?? this.subTotal,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      orderNo,
-      channel,
-      preparationTime,
-      orderingService,
-      paymentMethod,
-      status,
-      orderAt,
-      deliveryAt,
-      customer,
-      address,
-      discountCoupon,
-      actualSubTotal,
-      subTotal,
-    ];
   }
 }

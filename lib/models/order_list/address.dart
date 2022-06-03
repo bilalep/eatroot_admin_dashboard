@@ -3,23 +3,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Address extends Equatable {
-  final int? id;
-  final String? name;
-  final String? address;
-
   const Address({this.id, this.name, this.address});
-
-  factory Address.fromMap(Map<String, dynamic> data) => Address(
-        id: data['id'] as int?,
-        name: data['name'] as String?,
-        address: data['address'] as String?,
-      );
-
-  Map<String, dynamic> toMap() => {
-        'id': id,
-        'name': name,
-        'address': address,
-      };
 
   /// `dart:convert`
   ///
@@ -27,6 +11,28 @@ class Address extends Equatable {
   factory Address.fromJson(String data) {
     return Address.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+
+  factory Address.fromMap(Map<String, dynamic> data) => Address(
+        id: data['id'] as int?,
+        name: data['name'] as String?,
+        address: data['address'] as String?,
+      );
+
+  final String? address;
+  final int? id;
+  final String? name;
+
+  @override
+  List<Object?> get props => [id, name, address];
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'id': id,
+        'name': name,
+        'address': address,
+      };
 
   /// `dart:convert`
   ///
@@ -44,10 +50,4 @@ class Address extends Equatable {
       address: address ?? this.address,
     );
   }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [id, name, address];
 }

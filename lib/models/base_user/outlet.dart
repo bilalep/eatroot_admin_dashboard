@@ -3,17 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Outlet extends Equatable {
-  final int? id;
-  final String? nameEn;
-  final String? nameAr;
-  final String? addressEn;
-  final String? addressAr;
-  final dynamic image;
-  final String? status;
-  final bool? deliveryPaused;
-  final bool? pickupPaused;
-  final List<dynamic>? deliveryPartners;
-
   const Outlet({
     this.id,
     this.nameEn,
@@ -26,6 +15,13 @@ class Outlet extends Equatable {
     this.pickupPaused,
     this.deliveryPartners,
   });
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Outlet].
+  factory Outlet.fromJson(String data) {
+    return Outlet.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory Outlet.fromMap(Map<String, dynamic> data) => Outlet(
         id: data['id'] as int?,
@@ -40,7 +36,37 @@ class Outlet extends Equatable {
         deliveryPartners: data['delivery_partners'] as List<dynamic>?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? addressAr;
+  final String? addressEn;
+  final List<dynamic>? deliveryPartners;
+  final bool? deliveryPaused;
+  final int? id;
+  final dynamic image;
+  final String? nameAr;
+  final String? nameEn;
+  final bool? pickupPaused;
+  final String? status;
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      nameEn,
+      nameAr,
+      addressEn,
+      addressAr,
+      image,
+      status,
+      deliveryPaused,
+      pickupPaused,
+      deliveryPartners,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'name_en': nameEn,
         'name_ar': nameAr,
@@ -52,13 +78,6 @@ class Outlet extends Equatable {
         'pickup_paused': pickupPaused,
         'delivery_partners': deliveryPartners,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Outlet].
-  factory Outlet.fromJson(String data) {
-    return Outlet.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -89,24 +108,5 @@ class Outlet extends Equatable {
       pickupPaused: pickupPaused ?? this.pickupPaused,
       deliveryPartners: deliveryPartners ?? this.deliveryPartners,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      nameEn,
-      nameAr,
-      addressEn,
-      addressAr,
-      image,
-      status,
-      deliveryPaused,
-      pickupPaused,
-      deliveryPartners,
-    ];
   }
 }

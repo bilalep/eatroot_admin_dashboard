@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Language extends Equatable {
-  final int? id;
-  final int? relId;
-  final String? label;
-  final String? lang;
-  final bool? active;
-
   const Language({this.id, this.relId, this.label, this.lang, this.active});
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Language].
+  factory Language.fromJson(String data) {
+    return Language.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory Language.fromMap(Map<String, dynamic> data) => Language(
         id: data['id'] as int?,
@@ -19,20 +20,25 @@ class Language extends Equatable {
         active: data['active'] as bool?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final bool? active;
+  final int? id;
+  final String? label;
+  final String? lang;
+  final int? relId;
+
+  @override
+  List<Object?> get props => [id, relId, label, lang, active];
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'rel_id': relId,
         'label': label,
         'lang': lang,
         'active': active,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Language].
-  factory Language.fromJson(String data) {
-    return Language.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -54,10 +60,4 @@ class Language extends Equatable {
       active: active ?? this.active,
     );
   }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [id, relId, label, lang, active];
 }

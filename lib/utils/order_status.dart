@@ -1,9 +1,8 @@
 class OrderStatus {
-  final int _currentStatus;
-
   OrderStatus(this._currentStatus);
 
-  final Map _currentStatusDescription = {
+  final int _currentStatus;
+  final Map<int, String> _currentStatusDescription = {
     1: 'Delivery Order Placed',
     2: 'Delivery Order Accepted',
     3: 'Delivery Ready',
@@ -16,31 +15,8 @@ class OrderStatus {
     10: 'Order Cancelled',
   };
 
-  /*  static String currentOrderStatusShort(String status) {
-    switch (status) {
-      case 1:
-      case 6:
-        return 'Placed';
-      case 2:
-      case 7:
-        return 'Accepted';
-      case 3:
-      case 8:
-        return 'Ready';
-      case 4:
-        return 'In Route';
-      case 5:
-      case 9:
-        return 'Completed';
-      case 10:
-        return 'Cancelled';
-      default:
-        return 'Status Unavailable';
-    }
-  } */
-
   String getStatusDescription() {
-    return _currentStatusDescription[_currentStatus];
+    return _currentStatusDescription[_currentStatus] ?? 'Unknown';
   }
 
   String getButtonText() {
@@ -65,4 +41,27 @@ class OrderStatus {
         return 'Go Back';
     }
   }
+
+  /*  static String currentOrderStatusShort(String status) {
+    switch (status) {
+      case 1:
+      case 6:
+        return 'Placed';
+      case 2:
+      case 7:
+        return 'Accepted';
+      case 3:
+      case 8:
+        return 'Ready';
+      case 4:
+        return 'In Route';
+      case 5:
+      case 9:
+        return 'Completed';
+      case 10:
+        return 'Cancelled';
+      default:
+        return 'Status Unavailable';
+    }
+  } */
 }

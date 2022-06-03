@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tech_test/models/base_user/base_user.dart';
 import 'package:tech_test/models/base_user/user.dart';
 import 'package:tech_test/services/local_storage_service.dart';
-
-import '../models/base_user/base_user.dart';
-import 'package:flutter/material.dart';
-import 'package:tech_test/models/base_user/base_user.dart';
-
-import '../utils/constants.dart';
+import 'package:tech_test/utils/constants.dart';
 
 class AuthProvider with ChangeNotifier {
   BaseUser? baseUser;
@@ -28,22 +25,22 @@ class AuthProvider with ChangeNotifier {
 
   // String? get token => baseUser?.token;
 
-  signIn({required String userName, required String password}) async {
+  Future<void> signIn(
+      {required String userName, required String password}) async {
     _loading = true;
     notifyListeners();
-    var headers = {
+    final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };
 
-    http.Request request =
-        http.Request('POST', Uri.parse('$endpoint/auth/login'));
+    final request = http.Request('POST', Uri.parse('$endpoint/auth/login'));
 
-    request.body = json.encode({"username": userName, "password": password});
+    request.body = json.encode({'username': userName, 'password': password});
     request.headers.addAll(headers);
 
-    http.StreamedResponse streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
+    final streamedResponse = await request.send();
+    final response = await http.Response.fromStream(streamedResponse);
 
     if (streamedResponse.statusCode == 200) {
       baseUser = BaseUser.fromJson(response.body);

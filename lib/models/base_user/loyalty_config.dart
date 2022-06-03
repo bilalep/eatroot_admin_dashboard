@@ -3,20 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class LoyaltyConfig extends Equatable {
-  final String? restaurantId;
-  final String? deliveryCashBack;
-  final String? pickupCashBack;
-  final String? walkinCashBack;
-  final String? pointExpiryDays;
-  final String? minRedeemAmount;
-  final dynamic maxRedeemAmount;
-  final String? hasPickup;
-  final String? hasDelivery;
-  final String? hasWalkin;
-  final String? earnOnDeliveryCharge;
-  final String? redeemOnDeliveryCharge;
-  final String? q;
-
   const LoyaltyConfig({
     this.restaurantId,
     this.deliveryCashBack,
@@ -32,6 +18,13 @@ class LoyaltyConfig extends Equatable {
     this.redeemOnDeliveryCharge,
     this.q,
   });
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [LoyaltyConfig]
+  factory LoyaltyConfig.fromJson(String data) {
+    return LoyaltyConfig.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory LoyaltyConfig.fromMap(Map<String, dynamic> data) => LoyaltyConfig(
         restaurantId: data['restaurant_id'] as String?,
@@ -49,7 +42,43 @@ class LoyaltyConfig extends Equatable {
         q: data['q'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? deliveryCashBack;
+  final String? earnOnDeliveryCharge;
+  final String? hasDelivery;
+  final String? hasPickup;
+  final String? hasWalkin;
+  final dynamic maxRedeemAmount;
+  final String? minRedeemAmount;
+  final String? pickupCashBack;
+  final String? pointExpiryDays;
+  final String? q;
+  final String? redeemOnDeliveryCharge;
+  final String? restaurantId;
+  final String? walkinCashBack;
+
+  @override
+  List<Object?> get props {
+    return [
+      restaurantId,
+      deliveryCashBack,
+      pickupCashBack,
+      walkinCashBack,
+      pointExpiryDays,
+      minRedeemAmount,
+      maxRedeemAmount,
+      hasPickup,
+      hasDelivery,
+      hasWalkin,
+      earnOnDeliveryCharge,
+      redeemOnDeliveryCharge,
+      q,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'restaurant_id': restaurantId,
         'deliveryCashBack': deliveryCashBack,
         'pickupCashBack': pickupCashBack,
@@ -64,13 +93,6 @@ class LoyaltyConfig extends Equatable {
         'redeemOnDeliveryCharge': redeemOnDeliveryCharge,
         'q': q,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [LoyaltyConfig].
-  factory LoyaltyConfig.fromJson(String data) {
-    return LoyaltyConfig.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -108,27 +130,5 @@ class LoyaltyConfig extends Equatable {
           redeemOnDeliveryCharge ?? this.redeemOnDeliveryCharge,
       q: q ?? this.q,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      restaurantId,
-      deliveryCashBack,
-      pickupCashBack,
-      walkinCashBack,
-      pointExpiryDays,
-      minRedeemAmount,
-      maxRedeemAmount,
-      hasPickup,
-      hasDelivery,
-      hasWalkin,
-      earnOnDeliveryCharge,
-      redeemOnDeliveryCharge,
-      q,
-    ];
   }
 }

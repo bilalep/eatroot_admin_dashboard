@@ -4,18 +4,6 @@ import 'package:equatable/equatable.dart';
 import 'package:tech_test/models/order_details/attribute.dart';
 
 class Item extends Equatable {
-  final int? id;
-  final int? menuId;
-  final String? menuName;
-  final int? quantity;
-  final String? unitPrice;
-  final String? unitSalesPrice;
-  final String? subTotal;
-  final String? total;
-  final bool? cancelled;
-  final dynamic note;
-  final List<Attribute?>? attributes;
-
   const Item({
     this.id,
     this.menuId,
@@ -30,6 +18,13 @@ class Item extends Equatable {
     this.attributes,
   });
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Item].
+  factory Item.fromJson(String data) {
+    return Item.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+
   factory Item.fromMap(Map<String, dynamic> data) => Item(
         id: data['id'] as int?,
         menuId: data['menu_id'] as int?,
@@ -42,11 +37,43 @@ class Item extends Equatable {
         cancelled: data['cancelled'] as bool?,
         note: data['note'] as dynamic,
         attributes: (data['attributes'] as List<dynamic>?)
-            ?.map((e) => Attribute.fromMap(e as Map<String, dynamic>))
+            ?.map((dynamic e) => Attribute.fromMap(e as Map<String, dynamic>))
             .toList(),
       );
 
-  Map<String, dynamic> toMap() => {
+  final List<Attribute?>? attributes;
+  final bool? cancelled;
+  final int? id;
+  final int? menuId;
+  final String? menuName;
+  final dynamic note;
+  final int? quantity;
+  final String? subTotal;
+  final String? total;
+  final String? unitPrice;
+  final String? unitSalesPrice;
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      menuId,
+      menuName,
+      quantity,
+      unitPrice,
+      unitSalesPrice,
+      subTotal,
+      total,
+      cancelled,
+      note,
+      attributes,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'menu_id': menuId,
         'menu_name': menuName,
@@ -59,13 +86,6 @@ class Item extends Equatable {
         'note': note,
         'attributes': attributes,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Item].
-  factory Item.fromJson(String data) {
-    return Item.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -98,25 +118,5 @@ class Item extends Equatable {
       note: note ?? this.note,
       attributes: attributes ?? this.attributes,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      menuId,
-      menuName,
-      quantity,
-      unitPrice,
-      unitSalesPrice,
-      subTotal,
-      total,
-      cancelled,
-      note,
-      attributes,
-    ];
   }
 }

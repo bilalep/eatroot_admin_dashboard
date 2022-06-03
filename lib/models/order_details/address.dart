@@ -2,51 +2,10 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'custom_note.dart';
-import 'payment_method.dart';
+import 'package:tech_test/models/order_details/custom_note.dart';
+import 'package:tech_test/models/order_details/payment_method.dart';
 
 class Address extends Equatable {
-  final int? id;
-  final int? addressTypeId;
-  final String? addressType;
-  final dynamic address1;
-  final String? address;
-  final String? nameEn;
-  final String? nameAr;
-  final String? addressEn;
-  final String? addressAr;
-  final dynamic lat;
-  final dynamic lng;
-  final String? phone1;
-  final dynamic phone2;
-  final dynamic email;
-  final String? mobile;
-  final String? whatsapp;
-  final int? timezoneId;
-  final String? timezone;
-  final bool? deliveryPaused;
-  final bool? pickupPaused;
-  final int? hasDelivery;
-  final String? deliveryFee;
-  final int? deliveryTime;
-  final String? deliveryMinOrder;
-  final int? hasPickup;
-  final String? pickupFee;
-  final CustomNote? customNote;
-  final List<PaymentMethod>? paymentMethods;
-  final int? payOnline;
-  final int? cashOnDelivery;
-  final int? cardOnDelivery;
-  final int? cashOnPickup;
-  final int? cardOnPickup;
-  final String? pickupMinOrder;
-  final bool? pickupAlert;
-  final int? preparationTime;
-  final int? inclusiveTax;
-  final String? taxRate;
-  final String? status;
-  final dynamic image;
-
   const Address({
     this.id,
     this.addressTypeId,
@@ -90,6 +49,13 @@ class Address extends Equatable {
     this.image,
   });
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Address].
+  factory Address.fromJson(String data) {
+    return Address.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+
   factory Address.fromMap(Map<String, dynamic> data) => Address(
         id: data['id'] as int?,
         addressTypeId: data['address_type_id'] as int?,
@@ -121,7 +87,9 @@ class Address extends Equatable {
             ? null
             : CustomNote.fromMap(data['custom_note'] as Map<String, dynamic>),
         paymentMethods: (data['payment_methods'] as List<dynamic>?)
-            ?.map((e) => PaymentMethod.fromMap(e as Map<String, dynamic>))
+            ?.map(
+              (dynamic e) => PaymentMethod.fromMap(e as Map<String, dynamic>),
+            )
             .toList(),
         payOnline: data['pay_online'] as int?,
         cashOnDelivery: data['cash_on_delivery'] as int?,
@@ -137,7 +105,97 @@ class Address extends Equatable {
         image: data['image'] as dynamic,
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? address;
+  final dynamic address1;
+  final String? addressAr;
+  final String? addressEn;
+  final String? addressType;
+  final int? addressTypeId;
+  final int? cardOnDelivery;
+  final int? cardOnPickup;
+  final int? cashOnDelivery;
+  final int? cashOnPickup;
+  final CustomNote? customNote;
+  final String? deliveryFee;
+  final String? deliveryMinOrder;
+  final bool? deliveryPaused;
+  final int? deliveryTime;
+  final dynamic email;
+  final int? hasDelivery;
+  final int? hasPickup;
+  final int? id;
+  final dynamic image;
+  final int? inclusiveTax;
+  final dynamic lat;
+  final dynamic lng;
+  final String? mobile;
+  final String? nameAr;
+  final String? nameEn;
+  final int? payOnline;
+  final List<PaymentMethod>? paymentMethods;
+  final String? phone1;
+  final dynamic phone2;
+  final bool? pickupAlert;
+  final String? pickupFee;
+  final String? pickupMinOrder;
+  final bool? pickupPaused;
+  final int? preparationTime;
+  final String? status;
+  final String? taxRate;
+  final String? timezone;
+  final int? timezoneId;
+  final String? whatsapp;
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      addressTypeId,
+      addressType,
+      address1,
+      address,
+      nameEn,
+      nameAr,
+      addressEn,
+      addressAr,
+      lat,
+      lng,
+      phone1,
+      phone2,
+      email,
+      mobile,
+      whatsapp,
+      timezoneId,
+      timezone,
+      deliveryPaused,
+      pickupPaused,
+      hasDelivery,
+      deliveryFee,
+      deliveryTime,
+      deliveryMinOrder,
+      hasPickup,
+      pickupFee,
+      customNote,
+      paymentMethods,
+      payOnline,
+      cashOnDelivery,
+      cardOnDelivery,
+      cashOnPickup,
+      cardOnPickup,
+      pickupMinOrder,
+      pickupAlert,
+      preparationTime,
+      inclusiveTax,
+      taxRate,
+      status,
+      image,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'address_type_id': addressTypeId,
         'address_type': addressType,
@@ -179,13 +237,6 @@ class Address extends Equatable {
         'status': status,
         'image': image,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Address].
-  factory Address.fromJson(String data) {
-    return Address.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -276,54 +327,5 @@ class Address extends Equatable {
       status: status ?? this.status,
       image: image ?? this.image,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      addressTypeId,
-      addressType,
-      address1,
-      address,
-      nameEn,
-      nameAr,
-      addressEn,
-      addressAr,
-      lat,
-      lng,
-      phone1,
-      phone2,
-      email,
-      mobile,
-      whatsapp,
-      timezoneId,
-      timezone,
-      deliveryPaused,
-      pickupPaused,
-      hasDelivery,
-      deliveryFee,
-      deliveryTime,
-      deliveryMinOrder,
-      hasPickup,
-      pickupFee,
-      customNote,
-      paymentMethods,
-      payOnline,
-      cashOnDelivery,
-      cardOnDelivery,
-      cashOnPickup,
-      cardOnPickup,
-      pickupMinOrder,
-      pickupAlert,
-      preparationTime,
-      inclusiveTax,
-      taxRate,
-      status,
-      image,
-    ];
   }
 }

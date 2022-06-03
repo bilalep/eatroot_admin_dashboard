@@ -2,51 +2,13 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'address.dart';
-import 'customer.dart';
-import 'discount.dart';
-import 'item.dart';
-import 'status_history.dart';
+import 'package:tech_test/models/order_details/address.dart';
+import 'package:tech_test/models/order_details/customer.dart';
+import 'package:tech_test/models/order_details/discount.dart';
+import 'package:tech_test/models/order_details/item.dart';
+import 'package:tech_test/models/order_details/status_history.dart';
 
 class OrderDetail extends Equatable {
-  final int? id;
-  final String? orderNo;
-  final int? outletId;
-  final String? outletName;
-  final String? channel;
-  final dynamic note;
-  final String? orderingService;
-  final String? paymentMethod;
-  final String? totalItems;
-  final String? taxType;
-  final String? taxPercent;
-  final dynamic trnNo;
-  final int? outletPreparationTime;
-  final dynamic preparationTime;
-  final String? actualSubTotal;
-  final String? subTotal;
-  final String? totalWithTax;
-  final String? totalWithoutTax;
-  final String? tax;
-  final String? deliveryFee;
-  final String? amountToPay;
-  final String? redeemedAmount;
-  final String? finalAmount;
-  final Discount? discount;
-  final String? orderedAt;
-  final String? deliveryAt;
-  final String? status;
-  final List<StatusHistory>? statusHistory;
-  final bool? cancelled;
-  final dynamic cancellationReason;
-  final int? customerTotalOrder;
-  final Customer? customer;
-  final Address? address;
-  final bool? pickupCustomerArrived;
-  final dynamic pickupCustomerNote;
-  final bool? pickupFullfilled;
-  final List<Item>? items;
-
   const OrderDetail({
     this.id,
     this.orderNo,
@@ -87,6 +49,13 @@ class OrderDetail extends Equatable {
     this.items,
   });
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [OrderDetail].
+  factory OrderDetail.fromJson(String data) {
+    return OrderDetail.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+
   factory OrderDetail.fromMap(Map<String, dynamic> data) => OrderDetail(
         id: data['id'] as int?,
         orderNo: data['order_no'] as String?,
@@ -118,7 +87,9 @@ class OrderDetail extends Equatable {
         deliveryAt: data['delivery_at'] as String?,
         status: data['status'] as String?,
         statusHistory: (data['status_history'] as List<dynamic>?)
-            ?.map((e) => StatusHistory.fromMap(e as Map<String, dynamic>))
+            ?.map(
+              (dynamic e) => StatusHistory.fromMap(e as Map<String, dynamic>),
+            )
             .toList(),
         cancelled: data['cancelled'] as bool?,
         cancellationReason: data['cancellation_reason'] as dynamic,
@@ -133,11 +104,95 @@ class OrderDetail extends Equatable {
         pickupCustomerNote: data['pickup_customer_note'] as dynamic,
         pickupFullfilled: data['pickup_fullfilled'] as bool?,
         items: (data['items'] as List<dynamic>?)
-            ?.map((e) => Item.fromMap(e as Map<String, dynamic>))
+            ?.map((dynamic e) => Item.fromMap(e as Map<String, dynamic>))
             .toList(),
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? actualSubTotal;
+  final Address? address;
+  final String? amountToPay;
+  final dynamic cancellationReason;
+  final bool? cancelled;
+  final String? channel;
+  final Customer? customer;
+  final int? customerTotalOrder;
+  final String? deliveryAt;
+  final String? deliveryFee;
+  final Discount? discount;
+  final String? finalAmount;
+  final int? id;
+  final List<Item>? items;
+  final dynamic note;
+  final String? orderNo;
+  final String? orderedAt;
+  final String? orderingService;
+  final int? outletId;
+  final String? outletName;
+  final int? outletPreparationTime;
+  final String? paymentMethod;
+  final bool? pickupCustomerArrived;
+  final dynamic pickupCustomerNote;
+  final bool? pickupFullfilled;
+  final dynamic preparationTime;
+  final String? redeemedAmount;
+  final String? status;
+  final List<StatusHistory>? statusHistory;
+  final String? subTotal;
+  final String? tax;
+  final String? taxPercent;
+  final String? taxType;
+  final String? totalItems;
+  final String? totalWithTax;
+  final String? totalWithoutTax;
+  final dynamic trnNo;
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      orderNo,
+      outletId,
+      outletName,
+      channel,
+      note,
+      orderingService,
+      paymentMethod,
+      totalItems,
+      taxType,
+      taxPercent,
+      trnNo,
+      outletPreparationTime,
+      preparationTime,
+      actualSubTotal,
+      subTotal,
+      totalWithTax,
+      totalWithoutTax,
+      tax,
+      deliveryFee,
+      amountToPay,
+      redeemedAmount,
+      finalAmount,
+      discount,
+      orderedAt,
+      deliveryAt,
+      status,
+      statusHistory,
+      cancelled,
+      cancellationReason,
+      customerTotalOrder,
+      customer,
+      address,
+      pickupCustomerArrived,
+      pickupCustomerNote,
+      pickupFullfilled,
+      items,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'order_no': orderNo,
         'outlet_id': outletId,
@@ -176,13 +231,6 @@ class OrderDetail extends Equatable {
         'pickup_fullfilled': pickupFullfilled,
         'items': items?.map((e) => e.toMap()).toList(),
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [OrderDetail].
-  factory OrderDetail.fromJson(String data) {
-    return OrderDetail.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -269,51 +317,5 @@ class OrderDetail extends Equatable {
       pickupFullfilled: pickupFullfilled ?? this.pickupFullfilled,
       items: items ?? this.items,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      orderNo,
-      outletId,
-      outletName,
-      channel,
-      note,
-      orderingService,
-      paymentMethod,
-      totalItems,
-      taxType,
-      taxPercent,
-      trnNo,
-      outletPreparationTime,
-      preparationTime,
-      actualSubTotal,
-      subTotal,
-      totalWithTax,
-      totalWithoutTax,
-      tax,
-      deliveryFee,
-      amountToPay,
-      redeemedAmount,
-      finalAmount,
-      discount,
-      orderedAt,
-      deliveryAt,
-      status,
-      statusHistory,
-      cancelled,
-      cancellationReason,
-      customerTotalOrder,
-      customer,
-      address,
-      pickupCustomerArrived,
-      pickupCustomerNote,
-      pickupFullfilled,
-      items,
-    ];
   }
 }

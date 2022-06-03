@@ -2,32 +2,11 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'custom_note.dart';
-import 'language.dart';
-import 'settings.dart';
+import 'package:tech_test/models/base_user/custom_note.dart';
+import 'package:tech_test/models/base_user/language.dart';
+import 'package:tech_test/models/base_user/settings.dart';
 
 class Restaurant extends Equatable {
-  final int? id;
-  final String? nameEn;
-  final String? nameAr;
-  final String? slug;
-  final String? email;
-  final String? mobile;
-  final String? phone1;
-  final String? phone2;
-  final String? address;
-  final dynamic logo;
-  final int? hasDelivery;
-  final bool? testMode;
-  final int? hasPickup;
-  final String? deliveryFee;
-  final String? pickupFee;
-  final int? numberOfOutlets;
-  final String? status;
-  final CustomNote? customNote;
-  final List<Language>? languages;
-  final Settings? settings;
-
   const Restaurant({
     this.id,
     this.nameEn,
@@ -51,6 +30,13 @@ class Restaurant extends Equatable {
     this.settings,
   });
 
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Restaurant].
+  factory Restaurant.fromJson(String data) {
+    return Restaurant.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+
   factory Restaurant.fromMap(Map<String, dynamic> data) => Restaurant(
         id: data['id'] as int?,
         nameEn: data['name_en'] as String?,
@@ -73,14 +59,64 @@ class Restaurant extends Equatable {
             ? null
             : CustomNote.fromMap(data['custom_note'] as Map<String, dynamic>),
         languages: (data['languages'] as List<dynamic>?)
-            ?.map((e) => Language.fromMap(e as Map<String, dynamic>))
+            ?.map((dynamic e) => Language.fromMap(e as Map<String, dynamic>))
             .toList(),
         settings: data['settings'] == null
             ? null
             : Settings.fromMap(data['settings'] as Map<String, dynamic>),
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? address;
+  final CustomNote? customNote;
+  final String? deliveryFee;
+  final String? email;
+  final int? hasDelivery;
+  final int? hasPickup;
+  final int? id;
+  final List<Language>? languages;
+  final dynamic logo;
+  final String? mobile;
+  final String? nameAr;
+  final String? nameEn;
+  final int? numberOfOutlets;
+  final String? phone1;
+  final String? phone2;
+  final String? pickupFee;
+  final Settings? settings;
+  final String? slug;
+  final String? status;
+  final bool? testMode;
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      nameEn,
+      nameAr,
+      slug,
+      email,
+      mobile,
+      phone1,
+      phone2,
+      address,
+      logo,
+      hasDelivery,
+      testMode,
+      hasPickup,
+      deliveryFee,
+      pickupFee,
+      numberOfOutlets,
+      status,
+      customNote,
+      languages,
+      settings,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'name_en': nameEn,
         'name_ar': nameAr,
@@ -102,13 +138,6 @@ class Restaurant extends Equatable {
         'languages': languages?.map((e) => e.toMap()).toList(),
         'settings': settings?.toMap(),
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Restaurant].
-  factory Restaurant.fromJson(String data) {
-    return Restaurant.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -159,34 +188,5 @@ class Restaurant extends Equatable {
       languages: languages ?? this.languages,
       settings: settings ?? this.settings,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      nameEn,
-      nameAr,
-      slug,
-      email,
-      mobile,
-      phone1,
-      phone2,
-      address,
-      logo,
-      hasDelivery,
-      testMode,
-      hasPickup,
-      deliveryFee,
-      pickupFee,
-      numberOfOutlets,
-      status,
-      customNote,
-      languages,
-      settings,
-    ];
   }
 }

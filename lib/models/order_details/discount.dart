@@ -3,12 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class Discount extends Equatable {
-  final bool? hasDiscount;
-  final dynamic id;
-  final dynamic code;
-  final dynamic value;
-  final String? amount;
-
   const Discount({
     this.hasDiscount,
     this.id,
@@ -16,6 +10,13 @@ class Discount extends Equatable {
     this.value,
     this.amount,
   });
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Discount].
+  factory Discount.fromJson(String data) {
+    return Discount.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory Discount.fromMap(Map<String, dynamic> data) => Discount(
         hasDiscount: data['has_discount'] as bool?,
@@ -25,20 +26,25 @@ class Discount extends Equatable {
         amount: data['amount'] as String?,
       );
 
-  Map<String, dynamic> toMap() => {
+  final String? amount;
+  final dynamic code;
+  final bool? hasDiscount;
+  final dynamic id;
+  final dynamic value;
+
+  @override
+  List<Object?> get props => [hasDiscount, id, code, value, amount];
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'has_discount': hasDiscount,
         'id': id,
         'code': code,
         'value': value,
         'amount': amount,
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Discount].
-  factory Discount.fromJson(String data) {
-    return Discount.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -60,10 +66,4 @@ class Discount extends Equatable {
       amount: amount ?? this.amount,
     );
   }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [hasDiscount, id, code, value, amount];
 }

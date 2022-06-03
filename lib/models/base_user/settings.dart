@@ -2,20 +2,9 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'loyalty_config.dart';
+import 'package:tech_test/models/base_user/loyalty_config.dart';
 
 class Settings extends Equatable {
-  final int? id;
-  final int? otpVerification;
-  final int? orderAcceptSms;
-  final int? pickupReadySms;
-  final int? orderDeliverySms;
-  final int? orderReviewEmail;
-  final String? smsSenderId;
-  final String? paymentGateway;
-  final int? hasLoyalty;
-  final LoyaltyConfig? loyaltyConfig;
-
   const Settings({
     this.id,
     this.otpVerification,
@@ -28,6 +17,13 @@ class Settings extends Equatable {
     this.hasLoyalty,
     this.loyaltyConfig,
   });
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Settings].
+  factory Settings.fromJson(String data) {
+    return Settings.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
 
   factory Settings.fromMap(Map<String, dynamic> data) => Settings(
         id: data['id'] as int?,
@@ -42,10 +38,41 @@ class Settings extends Equatable {
         loyaltyConfig: data['loyalty_config'] == null
             ? null
             : LoyaltyConfig.fromMap(
-                data['loyalty_config'] as Map<String, dynamic>),
+                data['loyalty_config'] as Map<String, dynamic>,
+              ),
       );
 
-  Map<String, dynamic> toMap() => {
+  final int? hasLoyalty;
+  final int? id;
+  final LoyaltyConfig? loyaltyConfig;
+  final int? orderAcceptSms;
+  final int? orderDeliverySms;
+  final int? orderReviewEmail;
+  final int? otpVerification;
+  final String? paymentGateway;
+  final int? pickupReadySms;
+  final String? smsSenderId;
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      otpVerification,
+      orderAcceptSms,
+      pickupReadySms,
+      orderDeliverySms,
+      orderReviewEmail,
+      smsSenderId,
+      paymentGateway,
+      hasLoyalty,
+      loyaltyConfig,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
         'otp_verification': otpVerification,
         'order_accept_sms': orderAcceptSms,
@@ -57,13 +84,6 @@ class Settings extends Equatable {
         'has_loyalty': hasLoyalty,
         'loyalty_config': loyaltyConfig?.toMap(),
       };
-
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [Settings].
-  factory Settings.fromJson(String data) {
-    return Settings.fromMap(json.decode(data) as Map<String, dynamic>);
-  }
 
   /// `dart:convert`
   ///
@@ -94,24 +114,5 @@ class Settings extends Equatable {
       hasLoyalty: hasLoyalty ?? this.hasLoyalty,
       loyaltyConfig: loyaltyConfig ?? this.loyaltyConfig,
     );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      otpVerification,
-      orderAcceptSms,
-      pickupReadySms,
-      orderDeliverySms,
-      orderReviewEmail,
-      smsSenderId,
-      paymentGateway,
-      hasLoyalty,
-      loyaltyConfig,
-    ];
   }
 }

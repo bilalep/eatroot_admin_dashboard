@@ -2,22 +2,10 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'order_detail.dart';
+import 'package:tech_test/models/order_details/order_detail.dart';
 
 class OrderDetails extends Equatable {
-  final OrderDetail? orderDetail;
-
   const OrderDetails({this.orderDetail});
-
-  factory OrderDetails.fromMap(Map<String, dynamic> data) => OrderDetails(
-        orderDetail: data['order_detail'] == null
-            ? null
-            : OrderDetail.fromMap(data['order_detail'] as Map<String, dynamic>),
-      );
-
-  Map<String, dynamic> toMap() => {
-        'order_detail': orderDetail?.toMap(),
-      };
 
   /// `dart:convert`
   ///
@@ -25,6 +13,24 @@ class OrderDetails extends Equatable {
   factory OrderDetails.fromJson(String data) {
     return OrderDetails.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+
+  factory OrderDetails.fromMap(Map<String, dynamic> data) => OrderDetails(
+        orderDetail: data['order_detail'] == null
+            ? null
+            : OrderDetail.fromMap(data['order_detail'] as Map<String, dynamic>),
+      );
+
+  final OrderDetail? orderDetail;
+
+  @override
+  List<Object?> get props => [orderDetail];
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'order_detail': orderDetail?.toMap(),
+      };
 
   /// `dart:convert`
   ///
@@ -38,10 +44,4 @@ class OrderDetails extends Equatable {
       orderDetail: orderDetail ?? this.orderDetail,
     );
   }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [orderDetail];
 }
