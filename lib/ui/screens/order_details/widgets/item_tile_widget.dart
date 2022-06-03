@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../models/order_details/item.dart';
+import 'package:tech_test/models/order_details/item.dart';
 
 class ItemTileWidget extends StatelessWidget {
   const ItemTileWidget({
-    Key? key,
+    super.key,
     required this.orderItem,
-  }) : super(key: key);
+  });
 
   final Item orderItem;
 
@@ -17,7 +17,7 @@ class ItemTileWidget extends StatelessWidget {
         color: Colors.amber,
         borderRadius: BorderRadius.circular(10),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,29 +26,30 @@ class ItemTileWidget extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           const SizedBox(height: 4),
-          orderItem.attributes!.isEmpty || orderItem.attributes == null
-              ? const SizedBox()
-              : SizedBox(
-                  height: 20,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(
-                        orderItem.attributes![index]!.attribute ?? '',
-                        style: const TextStyle(color: Colors.black54),
-                      );
-                    },
-                    itemCount: orderItem.attributes!.length,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Text(
-                        ' + ',
-                        style: TextStyle(color: Colors.black54),
-                      );
-                    },
-                    scrollDirection: Axis.horizontal,
-                  ),
-                ),
-          const SizedBox(height: 4.0),
+          if (orderItem.attributes!.isEmpty || orderItem.attributes == null)
+            const SizedBox()
+          else
+            SizedBox(
+              height: 20,
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return Text(
+                    orderItem.attributes![index]!.attribute ?? '',
+                    style: const TextStyle(color: Colors.black54),
+                  );
+                },
+                itemCount: orderItem.attributes!.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const Text(
+                    ' + ',
+                    style: TextStyle(color: Colors.black54),
+                  );
+                },
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
+          const SizedBox(height: 4),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

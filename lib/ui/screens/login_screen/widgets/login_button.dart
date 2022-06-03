@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_test/providers/auth_provider.dart';
-import 'package:tech_test/providers/live_order_provider.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({
@@ -16,8 +15,6 @@ class LoginButton extends StatelessWidget {
     // AuthProvider authProvider = Provider.of(context);
     return Consumer<AuthProvider>(
       builder: (BuildContext context, authProvider, _) {
-        final nav = Navigator.of(context);
-        final liveOrderProvider = Provider.of<LiveOrderProvider>(context);
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: Colors.black,

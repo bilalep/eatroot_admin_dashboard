@@ -54,7 +54,6 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   color: Colors.black54,
                 ),
                 onPressed: () {
-                  // Update the state i.e. toogle the state of passwordVisible variable
                   setState(() {
                     passwordVisible = !passwordVisible;
                   });

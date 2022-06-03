@@ -2,22 +2,10 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'order.dart';
+import 'package:tech_test/models/order_list/order.dart';
 
 class OrderList extends Equatable {
-  final List<Order>? order;
-
   const OrderList({this.order});
-
-  factory OrderList.fromMap(Map<String, dynamic> data) => OrderList(
-        order: (data['data'] as List<dynamic>?)
-            ?.map((dynamic e) => Order.fromMap(e as Map<String, dynamic>))
-            .toList(),
-      );
-
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        'data': order?.map((e) => e.toMap()).toList(),
-      };
 
   /// `dart:convert`
   ///
@@ -25,6 +13,24 @@ class OrderList extends Equatable {
   factory OrderList.fromJson(String data) {
     return OrderList.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+
+  factory OrderList.fromMap(Map<String, dynamic> data) => OrderList(
+        order: (data['data'] as List<dynamic>?)
+            ?.map((dynamic e) => Order.fromMap(e as Map<String, dynamic>))
+            .toList(),
+      );
+
+  final List<Order>? order;
+
+  @override
+  List<Object?> get props => [order];
+
+  @override
+  bool get stringify => true;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'data': order?.map((e) => e.toMap()).toList(),
+      };
 
   /// `dart:convert`
   ///
@@ -38,10 +44,4 @@ class OrderList extends Equatable {
       order: data ?? order,
     );
   }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [order];
 }

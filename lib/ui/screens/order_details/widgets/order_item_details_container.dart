@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-
-import '../../../../models/order_details/order_detail.dart';
-import '../../../../utils/constants.dart';
-import '../../../core/widgets/order_type_icon.dart';
-import 'item_tile_widget.dart';
+import 'package:tech_test/models/order_details/order_detail.dart';
+import 'package:tech_test/ui/core/widgets/order_type_icon.dart';
+import 'package:tech_test/ui/screens/order_details/widgets/item_tile_widget.dart';
+import 'package:tech_test/utils/constants.dart';
 
 class OrderItemDetailsContainer extends StatelessWidget {
   const OrderItemDetailsContainer({
-    Key? key,
+    super.key,
     required this.orderDetail,
-  }) : super(key: key);
+  });
 
   final OrderDetail orderDetail;
 
@@ -33,7 +32,7 @@ class OrderItemDetailsContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -60,7 +59,7 @@ class OrderItemDetailsContainer extends StatelessWidget {
           ),
           kDivider,
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: ListView.separated(
               shrinkWrap: true,
               itemBuilder: (_, index) {
@@ -88,7 +87,7 @@ class OrderItemDetailsContainer extends StatelessWidget {
                     Text(
                       'x${orderDetail.totalItems ?? ''} items',
                     ),
-                    const SizedBox(height: 4.0),
+                    const SizedBox(height: 4),
                     Text(
                       '${orderDetail.amountToPay ?? ''} AED',
                       style: const TextStyle(

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.iotics.tech_test">
    <application
-        android:label="tech_test"
+        android:label="EatRoot Admin Dashboard"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

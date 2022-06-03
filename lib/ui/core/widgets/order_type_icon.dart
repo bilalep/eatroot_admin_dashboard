@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class OrderTypeIcon extends StatelessWidget {
   const OrderTypeIcon({
-    Key? key,
+    super.key,
     required this.orderingMethod,
-  }) : super(key: key);
+  });
 
   final String? orderingMethod;
 

@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tech_test/ui/core/widgets/order_type_icon.dart';
-
 import 'package:tech_test/models/order_list/order.dart';
 import 'package:tech_test/providers/order_detail_provider.dart';
+import 'package:tech_test/ui/core/widgets/order_type_icon.dart';
 import 'package:tech_test/ui/screens/order_details/order_details_screen.dart';
 
 class LiveOrderListTile extends StatelessWidget {
@@ -20,7 +19,7 @@ class LiveOrderListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.amber,
         borderRadius: BorderRadius.circular(10),

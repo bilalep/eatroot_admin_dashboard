@@ -27,13 +27,16 @@ class OrderDetailsProvider extends ChangeNotifier {
   }
 
   Future<void> changeOrderStatusBy1(
-      BuildContext ctx, int currentStatus, int orderId) async {
+    BuildContext ctx,
+    int currentStatus,
+    int orderId,
+  ) async {
     _loading = true;
     final liveOrderProvider =
         Provider.of<LiveOrderProvider>(ctx, listen: false);
     notifyListeners();
     if (currentStatus == 5 || currentStatus == 9 || currentStatus == 10) {
-      return null;
+      return;
     }
     await apiService.changeOrderStatusById(orderId, currentStatus + 1);
     await getOrderDetailsFromId(orderId);
