@@ -1,16 +1,23 @@
-# tech_test
+# Eatroot Admin Dashboard
 
-A new Flutter project.
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
 
-## Getting Started
+Admin Dashboard for Eatroot API using Flutter
 
-This project is a starting point for a Flutter application.
+### Plugins Used
+- [provider] - State management
+- [http] - required for making http requests
+- [shared_preferences] - for local storage
 
-A few resources to get you started if this is your first Flutter project:
+### Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Follow the instructions on [this](https://docs.flutter.dev/get-started/install) website to install Flutter SDK. (No need to install Android Studio if you just want to build the code)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- cd to the root of the project and run the following command:
+
+```sh
+  flutter run
+```
+
+- Your app should be running now in debug mode.
+
