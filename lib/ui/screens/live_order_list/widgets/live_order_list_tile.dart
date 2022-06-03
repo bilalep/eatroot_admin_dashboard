@@ -1,17 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_test/ui/core/widgets/order_type_icon.dart';
 
-import '../../../../models/order_list/order.dart';
-import '../../../../providers/order_detail_provider.dart';
-import '../../order_details/order_details_screen.dart';
+import 'package:tech_test/models/order_list/order.dart';
+import 'package:tech_test/providers/order_detail_provider.dart';
+import 'package:tech_test/ui/screens/order_details/order_details_screen.dart';
 
 class LiveOrderListTile extends StatelessWidget {
   const LiveOrderListTile({
-    Key? key,
+    super.key,
     required this.orderList,
     required this.index,
-  }) : super(key: key);
+  });
 
   final int index;
   final List<Order> orderList;
@@ -35,9 +37,11 @@ class LiveOrderListTile extends StatelessWidget {
         onTap: () async {
           if (orderList[index].id != null) {
             final navigator = Navigator.of(context);
-            await Provider.of<OrderDetailsProvider>(context, listen: false)
-                .getOrderDetailsFromId(orderList[index].id!);
-            navigator.pushNamed(OrderDetailsScreen.routeName);
+            unawaited(
+              Provider.of<OrderDetailsProvider>(context, listen: false)
+                  .getOrderDetailsFromId(orderList[index].id!),
+            );
+            await navigator.pushNamed(OrderDetailsScreen.routeName);
           }
         },
       ),

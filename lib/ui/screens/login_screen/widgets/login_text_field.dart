@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
 
-class LoginTextField extends StatelessWidget {
+class LoginTextField extends StatefulWidget {
   const LoginTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.labelText,
     required this.isObscure,
-  }) : super(key: key);
+  });
 
   final String labelText;
   final TextEditingController controller;
   final bool isObscure;
 
   @override
+  State<LoginTextField> createState() => _LoginTextFieldState();
+}
+
+class _LoginTextFieldState extends State<LoginTextField> {
+  bool passwordVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordVisible = widget.isObscure;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: controller,
-      obscureText: isObscure,
+      controller: widget.controller,
+      obscureText: passwordVisible,
       decoration: InputDecoration(
-        hintText: labelText,
+        hintText: widget.labelText,
         hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 16,
@@ -27,15 +40,27 @@ class LoginTextField extends StatelessWidget {
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
             color: Colors.black54,
-            width: 1.0,
           ),
         ),
         focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.black,
-            width: 2.0,
+            width: 2,
           ),
         ),
+        suffixIcon: widget.isObscure
+            ? IconButton(
+                icon: Icon(
+                  passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.black54,
+                ),
+                onPressed: () {
+                  // Update the state i.e. toogle the state of passwordVisible variable
+                  setState(() {
+                    passwordVisible = !passwordVisible;
+                  });
+                },
+              )
+            : const SizedBox(),
       ),
       style: Theme.of(context).textTheme.bodyText1,
     );
