@@ -25,8 +25,10 @@ class AuthProvider with ChangeNotifier {
 
   // String? get token => baseUser?.token;
 
-  Future<void> signIn(
-      {required String userName, required String password}) async {
+  Future<void> signIn({
+    required String userName,
+    required String password,
+  }) async {
     _loading = true;
     notifyListeners();
     final headers = {
@@ -34,9 +36,8 @@ class AuthProvider with ChangeNotifier {
       'Accept': 'application/json'
     };
 
-    final request = http.Request('POST', Uri.parse('$endpoint/auth/login'));
-
-    request.body = json.encode({'username': userName, 'password': password});
+    final request = http.Request('POST', Uri.parse('$endpoint/auth/login'))
+      ..body = json.encode({'username': userName, 'password': password});
     request.headers.addAll(headers);
 
     final streamedResponse = await request.send();
@@ -47,9 +48,16 @@ class AuthProvider with ChangeNotifier {
       await LocalStorageService.storeToken(baseUser!.token!);
       kBearerToken = baseUser!.token!;
     } else {
-      log('Authorisation failed: ${response.reasonPhrase}');
+      log('Authorization failed: ${response.reasonPhrase}');
     }
     _loading = false;
+    notifyListeners();
+  }
+
+  Future<void> signOut() async {
+    baseUser = null;
+    await LocalStorageService.deleteToken();
+    log('User signed out');
     notifyListeners();
   }
 }

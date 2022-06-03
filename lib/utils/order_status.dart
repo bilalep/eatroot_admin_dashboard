@@ -1,8 +1,5 @@
 class OrderStatus {
-  OrderStatus(this._currentStatus);
-
-  final int _currentStatus;
-  final Map<int, String> _currentStatusDescription = {
+  static final Map<int?, String?> _currentStatusDescription = {
     1: 'Delivery Order Placed',
     2: 'Delivery Order Accepted',
     3: 'Delivery Ready',
@@ -15,12 +12,12 @@ class OrderStatus {
     10: 'Order Cancelled',
   };
 
-  String getStatusDescription() {
-    return _currentStatusDescription[_currentStatus] ?? 'Unknown';
+  static String getStatusDescription(int currentStatus) {
+    return _currentStatusDescription[currentStatus] ?? 'Unknown';
   }
 
-  String getButtonText() {
-    switch (_currentStatus) {
+  static String getButtonText(int currentStatus) {
+    switch (currentStatus) {
       case 1:
       case 6:
         return 'Accept Order';

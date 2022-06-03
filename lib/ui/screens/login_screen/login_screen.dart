@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_test/providers/auth_provider.dart';
@@ -10,8 +12,8 @@ final TextEditingController _userNameController = TextEditingController();
 final TextEditingController _passwordController = TextEditingController();
 
 class LoginScreen extends StatelessWidget {
-  static const routeName = 'login';
   const LoginScreen({super.key});
+  static const routeName = 'login';
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +74,7 @@ class _LoginButton extends StatelessWidget {
                     password: _passwordController.text,
                   );
                   if (authProvider.isAuthenticated) {
-                    await liveOrderProvider.getLiveOrderListFromService();
+                    unawaited(liveOrderProvider.getLiveOrderListFromService());
                     await nav.pushReplacementNamed(
                       LiveOrderListScreen.routeName,
                     );

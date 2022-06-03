@@ -18,7 +18,7 @@ class OrderStatusModifierWidget extends StatelessWidget {
           builder: (context, orderDetails, _) {
             final currentStatusId =
                 orderDetails.orderDetail!.statusHistory!.last.statusId!;
-            final orderStatus = OrderStatus(currentStatusId);
+
             return orderDetails.loading
                 ? const SizedBox(
                     height: 20,
@@ -32,7 +32,7 @@ class OrderStatusModifierWidget extends StatelessWidget {
                 : Column(
                     children: [
                       Text(
-                        orderStatus.getStatusDescription(),
+                        OrderStatus.getStatusDescription(currentStatusId),
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       const SizedBox(height: 10),
@@ -44,7 +44,7 @@ class OrderStatusModifierWidget extends StatelessWidget {
                             primary: Colors.black,
                           ),
                           child: Text(
-                            orderStatus.getButtonText(),
+                            OrderStatus.getButtonText(currentStatusId),
                           ),
                           onPressed: () async {
                             if (currentStatusId == 5 ||
