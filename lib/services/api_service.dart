@@ -43,6 +43,7 @@ class ApiService {
       Uri.parse('$endpoint/orders/change-status'),
     )..body = json.encode({'order_id': '$orderId', 'status_id': '$statusId'});
     request.headers.addAll(headers);
+    print(request.body);
 
     final response = await request.send();
 

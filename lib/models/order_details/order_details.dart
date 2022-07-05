@@ -14,11 +14,13 @@ class OrderDetails extends Equatable {
     return OrderDetails.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
-  factory OrderDetails.fromMap(Map<String, dynamic> data) => OrderDetails(
-        orderDetail: data['order_detail'] == null
-            ? null
-            : OrderDetail.fromMap(data['order_detail'] as Map<String, dynamic>),
-      );
+  factory OrderDetails.fromMap(Map<String, dynamic> data) {
+    return OrderDetails(
+      orderDetail: data['order_detail'] == null
+          ? null
+          : OrderDetail.fromMap(data['order_detail'] as Map<String, dynamic>),
+    );
+  }
 
   final OrderDetail? orderDetail;
 

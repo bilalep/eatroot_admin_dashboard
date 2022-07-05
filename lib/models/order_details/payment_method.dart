@@ -7,7 +7,7 @@ class PaymentMethod extends Equatable {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [PaymentMethod]
+  /// Parses the string and returns the resulting Json object as [PaymentMethod].
   factory PaymentMethod.fromJson(String data) {
     return PaymentMethod.fromMap(json.decode(data) as Map<String, dynamic>);
   }

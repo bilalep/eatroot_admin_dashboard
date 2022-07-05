@@ -13,20 +13,30 @@ class ItemTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.amber,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            orderItem.menuName ?? '',
+            '${orderItem.quantity}x ${orderItem.menuName}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          const SizedBox(height: 4),
-          if (orderItem.attributes!.isEmpty || orderItem.attributes == null)
+          Text(
+            '${orderItem.total ?? ''} AED',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+/* if (orderItem.attributes!.isEmpty || orderItem.attributes == null)
             const SizedBox()
           else
             SizedBox(
@@ -48,29 +58,4 @@ class ItemTileWidget extends StatelessWidget {
                 },
                 scrollDirection: Axis.horizontal,
               ),
-            ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${orderItem.total ?? ''} AED',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                'Qty: ${orderItem.quantity ?? ''}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+            ), */

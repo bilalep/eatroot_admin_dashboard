@@ -48,7 +48,7 @@ class AuthProvider with ChangeNotifier {
       await LocalStorageService.storeToken(baseUser!.token!);
       kBearerToken = baseUser!.token!;
     } else {
-      log('Authorization failed: ${response.reasonPhrase}');
+      log('Authorization failed: ${response.reasonPhrase} ${response.statusCode}');
     }
     _loading = false;
     notifyListeners();
@@ -56,7 +56,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> signOut() async {
     baseUser = null;
-    await LocalStorageService.deleteToken();
+    await LocalStorageService.clearLocalStorage();
     log('User signed out');
     notifyListeners();
   }

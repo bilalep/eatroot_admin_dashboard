@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tech_test/utils/colors.dart';
 
-const endpoint = 'https://dashboard-api-staging.eatroot.io/api';
+const endpoint = 'https://api.dashboard.eatroot.io/api';
 String kBearerToken = '';
 
 const kDivider = Divider(
@@ -8,4 +9,8 @@ const kDivider = Divider(
   height: 30,
   indent: 30,
   endIndent: 30,
+);
+
+const kLoadingIndicatorPink = CircularProgressIndicator(
+  color: kColorPrimaryPink,
 );
