@@ -15,6 +15,7 @@ class Order extends Equatable {
     this.paymentMethod,
     this.status,
     this.orderAt,
+    this.orderAtFormatted,
     this.deliveryAt,
     this.customer,
     this.address,
@@ -39,6 +40,7 @@ class Order extends Equatable {
         paymentMethod: data['payment_method'] as String?,
         status: data['status'] as String?,
         orderAt: data['order_at'] as String?,
+        orderAtFormatted: DateTime.parse(data['order_at'] as String),
         deliveryAt: data['delivery_at'] as String?,
         customer: data['customer'] == null
             ? null
@@ -59,6 +61,7 @@ class Order extends Equatable {
   final dynamic discountCoupon;
   final int? id;
   final String? orderAt;
+  final DateTime? orderAtFormatted;
   final String? orderNo;
   final String? orderingService;
   final String? paymentMethod;
@@ -77,6 +80,7 @@ class Order extends Equatable {
       paymentMethod,
       status,
       orderAt,
+      orderAtFormatted,
       deliveryAt,
       customer,
       address,
@@ -120,6 +124,7 @@ class Order extends Equatable {
     String? paymentMethod,
     String? status,
     String? orderAt,
+    DateTime? orderAtFormatted,
     String? deliveryAt,
     Customer? customer,
     Address? address,
@@ -136,6 +141,7 @@ class Order extends Equatable {
       paymentMethod: paymentMethod ?? this.paymentMethod,
       status: status ?? this.status,
       orderAt: orderAt ?? this.orderAt,
+      orderAtFormatted: orderAtFormatted ?? this.orderAtFormatted,
       deliveryAt: deliveryAt ?? this.deliveryAt,
       customer: customer ?? this.customer,
       address: address ?? this.address,

@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_test/presentation/screens/login/widgets/login_button.dart';
+import 'package:tech_test/presentation/screens/login/widgets/login_text_field.dart';
+import 'package:tech_test/presentation/screens/order_list/order_list_screen.dart';
 import 'package:tech_test/providers/auth_provider.dart';
-
 import 'package:tech_test/providers/live_order_provider.dart';
-import 'package:tech_test/ui/screens/live_order_list/live_order_list_screen.dart';
-import 'package:tech_test/ui/screens/login_screen/widgets/login_button.dart';
-import 'package:tech_test/ui/screens/login_screen/widgets/login_text_field.dart';
 
 final TextEditingController _userNameController = TextEditingController();
 final TextEditingController _passwordController = TextEditingController();

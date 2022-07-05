@@ -35,8 +35,10 @@ class OrderDetail extends Equatable {
     this.finalAmount,
     this.discount,
     this.orderedAt,
+    this.orderedAtFormatted,
     this.deliveryAt,
     this.status,
+    this.statusEnum,
     this.statusHistory,
     this.cancelled,
     this.cancellationReason,
@@ -84,8 +86,11 @@ class OrderDetail extends Equatable {
             ? null
             : Discount.fromMap(data['discount'] as Map<String, dynamic>),
         orderedAt: data['ordered_at'] as String?,
+        orderedAtFormatted: DateTime.parse(data['ordered_at'] as String),
         deliveryAt: data['delivery_at'] as String?,
         status: data['status'] as String?,
+        statusEnum:
+            _$enumFromName(data['status'] as String? ?? 'Status Unavailable'),
         statusHistory: (data['status_history'] as List<dynamic>?)
             ?.map(
               (dynamic e) => StatusHistory.fromMap(e as Map<String, dynamic>),
@@ -125,6 +130,7 @@ class OrderDetail extends Equatable {
   final dynamic note;
   final String? orderNo;
   final String? orderedAt;
+  final DateTime? orderedAtFormatted;
   final String? orderingService;
   final int? outletId;
   final String? outletName;
@@ -136,6 +142,7 @@ class OrderDetail extends Equatable {
   final dynamic preparationTime;
   final String? redeemedAmount;
   final String? status;
+  final Status? statusEnum;
   final List<StatusHistory>? statusHistory;
   final String? subTotal;
   final String? tax;
@@ -174,8 +181,10 @@ class OrderDetail extends Equatable {
       finalAmount,
       discount,
       orderedAt,
+      orderedAtFormatted,
       deliveryAt,
       status,
+      statusEnum,
       statusHistory,
       cancelled,
       cancellationReason,
@@ -218,6 +227,7 @@ class OrderDetail extends Equatable {
         'final_amount': finalAmount,
         'discount': discount?.toMap(),
         'ordered_at': orderedAt,
+        'order_at': orderedAtFormatted?.toIso8601String(),
         'delivery_at': deliveryAt,
         'status': status,
         'status_history': statusHistory?.map((e) => e.toMap()).toList(),
@@ -263,8 +273,10 @@ class OrderDetail extends Equatable {
     String? finalAmount,
     Discount? discount,
     String? orderedAt,
+    DateTime? orderedAtFormatted,
     String? deliveryAt,
     String? status,
+    Status? statusEnum,
     List<StatusHistory>? statusHistory,
     bool? cancelled,
     dynamic cancellationReason,
@@ -303,8 +315,10 @@ class OrderDetail extends Equatable {
       finalAmount: finalAmount ?? this.finalAmount,
       discount: discount ?? this.discount,
       orderedAt: orderedAt ?? this.orderedAt,
+      orderedAtFormatted: orderedAtFormatted ?? this.orderedAtFormatted,
       deliveryAt: deliveryAt ?? this.deliveryAt,
       status: status ?? this.status,
+      statusEnum: statusEnum ?? this.statusEnum,
       statusHistory: statusHistory ?? this.statusHistory,
       cancelled: cancelled ?? this.cancelled,
       cancellationReason: cancellationReason ?? this.cancellationReason,
@@ -317,5 +331,33 @@ class OrderDetail extends Equatable {
       pickupFullfilled: pickupFullfilled ?? this.pickupFullfilled,
       items: items ?? this.items,
     );
+  }
+}
+
+enum Status {
+  placed,
+  accepted,
+  ready,
+  inRoute,
+  completed,
+  cancelled,
+}
+
+Status _$enumFromName(String name) {
+  switch (name) {
+    case 'placed':
+      return Status.placed;
+    case 'accepted':
+      return Status.accepted;
+    case 'ready':
+      return Status.ready;
+    case 'in-route':
+      return Status.inRoute;
+    case 'completed':
+      return Status.completed;
+    case 'cancelled':
+      return Status.cancelled;
+    default:
+      throw Exception('Unknown Status: $name');
   }
 }

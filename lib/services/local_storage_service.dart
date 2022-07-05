@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const kTokenKey = 'token';
+const kUserNameKey = 'userName';
 
 class LocalStorageService {
   static Future<String?> getToken() async {
@@ -23,9 +24,21 @@ class LocalStorageService {
     return prefs.getString(kTokenKey) != null;
   }
 
-  static Future<void> deleteToken() async {
+  static Future<void> clearLocalStorage() async {
     final prefs = await SharedPreferences.getInstance();
-    log('deleteToken called');
-    await prefs.remove(kTokenKey);
+    log('clearLocalStorage called');
+    await prefs.clear();
+  }
+
+  static Future<void> storeUserName(String userName) async {
+    final prefs = await SharedPreferences.getInstance();
+    log('storeUserName called');
+    await prefs.setString(kUserNameKey, userName);
+  }
+
+  static Future<String?> getUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+    log('getUserName called');
+    return prefs.getString(kUserNameKey);
   }
 }

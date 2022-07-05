@@ -2,20 +2,15 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:tech_test/models/order_details/custom_note.dart';
+import 'package:tech_test/models/order_details/image.dart';
+import 'package:tech_test/models/order_details/name_and_address.dart';
 import 'package:tech_test/models/order_details/payment_method.dart';
 
 class Address extends Equatable {
   const Address({
     this.id,
-    this.addressTypeId,
-    this.addressType,
-    this.address1,
+    this.name,
     this.address,
-    this.nameEn,
-    this.nameAr,
-    this.addressEn,
-    this.addressAr,
     this.lat,
     this.lng,
     this.phone1,
@@ -58,14 +53,15 @@ class Address extends Equatable {
 
   factory Address.fromMap(Map<String, dynamic> data) => Address(
         id: data['id'] as int?,
-        addressTypeId: data['address_type_id'] as int?,
-        addressType: data['address_type'] as String?,
-        address1: data['address_1'] as dynamic,
-        address: data['address'] as String?,
-        nameEn: data['name_en'] as String?,
-        nameAr: data['name_ar'] as String?,
-        addressEn: data['address_en'] as String?,
-        addressAr: data['address_ar'] as String?,
+        name: data['name'] == null
+            ? null
+            : NameAndAddress.fromMap(data['name'] as Map<String, dynamic>),
+        // address: data['address'] == null
+        //     ? null
+        //     : NameAndAddress.fromMap(data['address'] as Map<String, dynamic>),
+        address: data['address'] == null
+            ? null
+            : NameAndAddress.fromMap(data['address'] as dynamic),
         lat: data['lat'] as dynamic,
         lng: data['lng'] as dynamic,
         phone1: data['phone_1'] as String?,
@@ -83,12 +79,12 @@ class Address extends Equatable {
         deliveryMinOrder: data['delivery_min_order'] as String?,
         hasPickup: data['has_pickup'] as int?,
         pickupFee: data['pickup_fee'] as String?,
-        customNote: data['custom_note'] == null
-            ? null
-            : CustomNote.fromMap(data['custom_note'] as Map<String, dynamic>),
+        customNote: data['custom_note'] as dynamic,
         paymentMethods: (data['payment_methods'] as List<dynamic>?)
             ?.map(
-              (dynamic e) => PaymentMethod.fromMap(e as Map<String, dynamic>),
+              (dynamic e) => PaymentMethod.fromMap(
+                e as Map<String, dynamic>,
+              ),
             )
             .toList(),
         payOnline: data['pay_online'] as int?,
@@ -102,20 +98,17 @@ class Address extends Equatable {
         inclusiveTax: data['inclusive_tax'] as int?,
         taxRate: data['tax_rate'] as String?,
         status: data['status'] as String?,
-        image: data['image'] as dynamic,
+        image: data['image'] == null
+            ? null
+            : Image.fromMap(data['image'] as Map<String, dynamic>),
       );
 
-  final String? address;
-  final dynamic address1;
-  final String? addressAr;
-  final String? addressEn;
-  final String? addressType;
-  final int? addressTypeId;
+  final NameAndAddress? address;
   final int? cardOnDelivery;
   final int? cardOnPickup;
   final int? cashOnDelivery;
   final int? cashOnPickup;
-  final CustomNote? customNote;
+  final dynamic customNote;
   final String? deliveryFee;
   final String? deliveryMinOrder;
   final bool? deliveryPaused;
@@ -124,13 +117,12 @@ class Address extends Equatable {
   final int? hasDelivery;
   final int? hasPickup;
   final int? id;
-  final dynamic image;
+  final Image? image;
   final int? inclusiveTax;
   final dynamic lat;
   final dynamic lng;
   final String? mobile;
-  final String? nameAr;
-  final String? nameEn;
+  final NameAndAddress? name;
   final int? payOnline;
   final List<PaymentMethod>? paymentMethods;
   final String? phone1;
@@ -150,14 +142,8 @@ class Address extends Equatable {
   List<Object?> get props {
     return [
       id,
-      addressTypeId,
-      addressType,
-      address1,
+      name,
       address,
-      nameEn,
-      nameAr,
-      addressEn,
-      addressAr,
       lat,
       lng,
       phone1,
@@ -197,14 +183,8 @@ class Address extends Equatable {
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'id': id,
-        'address_type_id': addressTypeId,
-        'address_type': addressType,
-        'address_1': address1,
-        'address': address,
-        'name_en': nameEn,
-        'name_ar': nameAr,
-        'address_en': addressEn,
-        'address_ar': addressAr,
+        'name': name?.toMap(),
+        'address': address?.toMap(),
         'lat': lat,
         'lng': lng,
         'phone_1': phone1,
@@ -222,7 +202,7 @@ class Address extends Equatable {
         'delivery_min_order': deliveryMinOrder,
         'has_pickup': hasPickup,
         'pickup_fee': pickupFee,
-        'custom_note': customNote?.toMap(),
+        'custom_note': customNote,
         'payment_methods': paymentMethods?.map((e) => e.toMap()).toList(),
         'pay_online': payOnline,
         'cash_on_delivery': cashOnDelivery,
@@ -235,7 +215,7 @@ class Address extends Equatable {
         'inclusive_tax': inclusiveTax,
         'tax_rate': taxRate,
         'status': status,
-        'image': image,
+        'image': image?.toMap(),
       };
 
   /// `dart:convert`
@@ -245,14 +225,8 @@ class Address extends Equatable {
 
   Address copyWith({
     int? id,
-    int? addressTypeId,
-    String? addressType,
-    dynamic address1,
-    String? address,
-    String? nameEn,
-    String? nameAr,
-    String? addressEn,
-    String? addressAr,
+    NameAndAddress? name,
+    NameAndAddress? address,
     dynamic lat,
     dynamic lng,
     String? phone1,
@@ -270,7 +244,7 @@ class Address extends Equatable {
     String? deliveryMinOrder,
     int? hasPickup,
     String? pickupFee,
-    CustomNote? customNote,
+    dynamic customNote,
     List<PaymentMethod>? paymentMethods,
     int? payOnline,
     int? cashOnDelivery,
@@ -283,18 +257,12 @@ class Address extends Equatable {
     int? inclusiveTax,
     String? taxRate,
     String? status,
-    dynamic image,
+    Image? image,
   }) {
     return Address(
       id: id ?? this.id,
-      addressTypeId: addressTypeId ?? this.addressTypeId,
-      addressType: addressType ?? this.addressType,
-      address1: address1 ?? this.address1,
+      name: name ?? this.name,
       address: address ?? this.address,
-      nameEn: nameEn ?? this.nameEn,
-      nameAr: nameAr ?? this.nameAr,
-      addressEn: addressEn ?? this.addressEn,
-      addressAr: addressAr ?? this.addressAr,
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
       phone1: phone1 ?? this.phone1,
