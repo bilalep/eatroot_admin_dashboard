@@ -17,12 +17,15 @@ class OrderListTitleRow extends StatelessWidget {
       children: [
         Text(
           'Order List',
-          style: kTSOrderScreenTitle,
+          style: AppTextStyles.boldHuge(
+            color: kColorWhite,
+          ),
         ),
         IconButton(
           icon: const Icon(Icons.account_circle),
+          padding: const EdgeInsets.all(2),
           color: kColorYellow,
-          iconSize: 45,
+          iconSize: 40,
           // ignore: flutter_style_todos
           onPressed: () {
             // TODO: Implement profile and logout

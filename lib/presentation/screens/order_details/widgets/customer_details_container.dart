@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_test/presentation/screens/order_details/widgets/icon_text_row.dart';
 import 'package:tech_test/providers/order_detail_provider.dart';
+import 'package:tech_test/utils/colors.dart';
 import 'package:tech_test/utils/text_styles.dart';
 
 class CustomerDetailsContainer extends StatelessWidget {
@@ -20,8 +21,8 @@ class CustomerDetailsContainer extends StatelessWidget {
               )
             : Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  color: kColorWhite,
                 ),
                 width: double.maxFinite,
                 padding: const EdgeInsets.all(16),
@@ -30,7 +31,9 @@ class CustomerDetailsContainer extends StatelessWidget {
                   children: [
                     Text(
                       '${orderDetail.customer?.name}',
-                      style: kTSOrderDetailScreenTitle1,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.boldExtraLarge(),
                     ),
                     const SizedBox(
                       height: 10,

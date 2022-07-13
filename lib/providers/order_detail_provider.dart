@@ -31,6 +31,7 @@ class OrderDetailsProvider extends ChangeNotifier {
     int currentStatus,
     int orderId,
   ) async {
+    final terminalStatuses = [5, 9, 10];
     _loading = true;
     final liveOrderProvider =
         Provider.of<LiveOrderProvider>(ctx, listen: false);
@@ -38,12 +39,16 @@ class OrderDetailsProvider extends ChangeNotifier {
     if (currentStatus == 5 || currentStatus == 9 || currentStatus == 10) {
       return;
     }
-    await apiService.changeOrderStatusById(orderId, currentStatus + 1);
-    await getOrderDetailsFromId(orderId);
-    await liveOrderProvider.getLiveOrderListFromService();
+    if (currentStatus > 0 &&
+        currentStatus < 9 &&
+        !terminalStatuses.contains(currentStatus)) {
+      await apiService.changeOrderStatusById(orderId, currentStatus + 1);
+      await getOrderDetailsFromId(orderId);
+      await liveOrderProvider.getLiveOrderListFromService();
 
-    _loading = false;
-    notifyListeners();
+      _loading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> cancelOrder(BuildContext ctx, int orderId) async {

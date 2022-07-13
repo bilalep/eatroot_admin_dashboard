@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:tech_test/utils/colors.dart';
 
 class OrderListShimmerList extends StatelessWidget {
   const OrderListShimmerList({
@@ -12,7 +13,7 @@ class OrderListShimmerList extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: kColorWhite,
             borderRadius: BorderRadius.circular(10),
           ),
           height: 94,
@@ -100,7 +101,7 @@ class ShimmerWidget extends StatelessWidget {
       highlightColor: Colors.grey[100]!,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: kColorWhite,
           borderRadius: BorderRadius.circular(radius),
         ),
         width: width,

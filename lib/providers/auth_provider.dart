@@ -46,7 +46,9 @@ class AuthProvider with ChangeNotifier {
     if (streamedResponse.statusCode == 200) {
       baseUser = BaseUser.fromJson(response.body);
       await LocalStorageService.storeToken(baseUser!.token!);
+      await LocalStorageService.storeUserName(baseUser!.user!.name ?? 'User');
       kBearerToken = baseUser!.token!;
+      kUserName = baseUser!.user!.name ?? 'User';
     } else {
       log('Authorization failed: ${response.reasonPhrase} ${response.statusCode}');
     }

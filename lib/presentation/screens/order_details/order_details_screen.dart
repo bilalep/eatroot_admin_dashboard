@@ -3,13 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:tech_test/presentation/core/widgets/rounded_text_box_small.dart';
 import 'package:tech_test/presentation/core/widgets/top_container_pink.dart';
 import 'package:tech_test/presentation/screens/order_details/widgets/customer_details_container.dart';
-import 'package:tech_test/presentation/screens/order_details/widgets/items_expansion_panel_list.dart';
+import 'package:tech_test/presentation/screens/order_details/widgets/item_details_container.dart';
+import 'package:tech_test/presentation/screens/order_details/widgets/order_details_title_row.dart';
 import 'package:tech_test/presentation/screens/order_details/widgets/order_status_modifier_widget.dart';
 import 'package:tech_test/providers/order_detail_provider.dart';
 import 'package:tech_test/utils/colors.dart';
 import 'package:tech_test/utils/constants.dart';
 import 'package:tech_test/utils/extensions.dart';
-import 'package:tech_test/utils/text_styles.dart';
+import 'package:tech_test/utils/order_status.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class OrderDetailsScreen extends StatelessWidget {
@@ -53,147 +54,51 @@ class OrderDetailsScreen extends StatelessWidget {
                             TopContainerPink(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
-                                vertical: 10,
                               ),
                               child: Column(
                                 children: [
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Order #${orderDetail.orderNo}',
-                                        style: kTSOrderDetailScreenAppBarTitle,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
+                                  OrderDetailsTitleRow(
+                                    orderDetail: orderDetail,
                                   ),
                                   const Padding(
                                     padding: EdgeInsets.all(8),
                                     child: CustomerDetailsContainer(),
                                   ),
+                                  const SizedBox(height: 10),
                                 ],
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16),
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    RoundedTextBoxSmall(
-                                      color: kColorYellow,
-                                      text: orderDetail.orderingService ?? '',
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    RoundedTextBoxSmall(
-                                      color: kColorPrimaryPink,
-                                      text:
-                                          (orderDetail.status ?? 'Unavailable')
-                                              .capitalize(),
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                      buildTimeAgoText(
-                                        time: orderDetail.orderedAtFormatted,
-                                        defaultValue: '-',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            // ignore: use_decorated_box
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      16,
-                                      8,
-                                      16,
-                                      0,
-                                    ),
-                                    child: Text(
-                                      'Items',
-                                      style: kTSOrderDetailScreenTitle1,
-                                    ),
-                                  ),
-                                  ItemsExpansionPanelList(
-                                    orderDetail: orderDetail,
+                                  RoundedTextBoxSmall(
+                                    color: kColorYellow,
+                                    text: orderDetail.orderingService ?? '',
                                   ),
                                   const SizedBox(
-                                    height: 8,
+                                    width: 8,
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            'Subtotal: ${orderDetail.actualSubTotal}',
-                                            style: kTSMedium13Black,
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            'VAT: ${orderDetail.tax}',
-                                            style: kTSMedium13Black,
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            'Delivery Fee: ${orderDetail.deliveryFee}',
-                                            style: kTSMedium13Black,
-                                          ),
-                                          const SizedBox(
-                                            height: 12,
-                                          ),
-                                          Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: 'Total: ',
-                                                  style:
-                                                      kTSOrderDetailScreenTitle2,
-                                                ),
-                                                TextSpan(
-                                                  text: orderDetail.amountToPay,
-                                                  style:
-                                                      kTSOrderDetailScreenTitle2,
-                                                ),
-                                                TextSpan(
-                                                  text: ' AED',
-                                                  style:
-                                                      kTSOrderDetailScreenTitle2,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                    ],
+                                  RoundedTextBoxSmall(
+                                    color: OrderStatus.getStatusBoxColor(
+                                      orderDetail.status ?? '',
+                                    ),
+                                    text: (orderDetail.status ?? 'Unavailable')
+                                        .capitalize(),
                                   ),
-                                  const SizedBox(
-                                    height: 8,
+                                  const Spacer(),
+                                  Text(
+                                    buildTimeAgoText(
+                                      time: orderDetail.orderedAtFormatted,
+                                      defaultValue: '-',
+                                    ),
                                   ),
                                 ],
+                              ),
+                            ),
+                            Expanded(
+                              child: ItemDetailsContainer(
+                                orderDetail: orderDetail,
                               ),
                             ),
                           ],
@@ -202,7 +107,7 @@ class OrderDetailsScreen extends StatelessWidget {
                           bottom: 0,
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            height: 80,
+                            height: 96,
                             child: const OrderStatusModifierWidget(),
                           ),
                         ),

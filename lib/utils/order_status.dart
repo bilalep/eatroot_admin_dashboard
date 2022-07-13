@@ -1,3 +1,7 @@
+import 'package:flutter/cupertino.dart';
+import 'package:tech_test/models/order_details/order_detail.dart';
+import 'package:tech_test/utils/colors.dart';
+
 class OrderStatus {
   static List<String> orderStatusApiDefaults = [
     'placed',
@@ -8,6 +12,104 @@ class OrderStatus {
     'cancelled',
   ];
 
+  static int getStatusIdFromStatusNameAndOrderMethod(
+    String statusName,
+    String orderMethod,
+  ) {
+    if (orderMethod == 'Delivery') {
+      switch (statusName) {
+        case 'placed':
+          return 1;
+        case 'accepted':
+          return 2;
+        case 'ready':
+          return 3;
+        case 'in-route':
+          return 4;
+        case 'completed':
+          return 5;
+        case 'cancelled':
+          return 10;
+        default:
+          throw Exception('Unknown delivery status name: $statusName');
+      }
+    } else if (orderMethod == 'Pickup') {
+      switch (statusName) {
+        case 'placed':
+          return 6;
+        case 'accepted':
+          return 7;
+        case 'completed':
+          return 8;
+        case 'ready':
+          return 9;
+        case 'cancelled':
+          return 10;
+        default:
+          throw Exception('Unknown pickup status name: $statusName');
+      }
+    }
+    throw Exception('Unknown order method: $orderMethod');
+  }
+
+  static int getOrderIdFromStatusEnumAndOrderMethod(
+    Status? status,
+    String? orderMethod,
+  ) {
+    if (orderMethod == 'Delivery') {
+      switch (status) {
+        case Status.placed:
+          return 1;
+        case Status.accepted:
+          return 2;
+        case Status.ready:
+          return 3;
+        case Status.inRoute:
+          return 4;
+        case Status.completed:
+          return 5;
+        case Status.cancelled:
+          return 10;
+        default:
+          throw Exception('Unknown delivery status enum: $status');
+      }
+    } else if (orderMethod == 'Pickup') {
+      switch (status) {
+        case Status.placed:
+          return 6;
+        case Status.accepted:
+          return 7;
+        case Status.ready:
+          return 8;
+        case Status.completed:
+          return 9;
+        case Status.cancelled:
+          return 10;
+        default:
+          throw Exception('Unknown pickup status name: $status');
+      }
+    }
+    throw Exception('Unknown order method: $orderMethod');
+  }
+
+  static List<Color> statusBoxColorList = [
+    kColorFlatOrange2,
+    kColorGreen,
+    kColorFlatBlue2,
+    kColorFlatViolet,
+    kColorFlatGreen,
+    kColorFlatRed,
+  ];
+
+  static Color getStatusBoxColor(String status) {
+    final index = orderStatusApiDefaults.indexOf(status);
+    if (index != -1) {
+      return statusBoxColorList[index];
+    } else {
+      return kColorFlatBlue;
+    }
+  }
+
   static List<String> timeList = [
     'in last 24 hours',
     'in last 7 days',
@@ -15,18 +117,18 @@ class OrderStatus {
     'all time',
   ];
 
-  static final Map<int?, String?> _currentStatusDescription = {
-    1: 'Delivery Order Placed',
-    2: 'Delivery Order Accepted',
-    3: 'Delivery Ready',
-    4: 'Delivery Order In Route',
-    5: 'Delivery Order Completed',
-    6: 'Pickup Order Placed',
-    7: 'Pickup Order Accepted',
-    8: 'Pickup Order Ready',
-    9: 'Pickup Order Completed',
-    10: 'Order Cancelled',
-  };
+  // static final Map<int?, String?> _currentStatusDescription = {
+  //   1: 'Delivery Order Placed',
+  //   2: 'Delivery Order Accepted',
+  //   3: 'Delivery Ready',
+  //   4: 'Delivery Order In Route',
+  //   5: 'Delivery Order Completed',
+  //   6: 'Pickup Order Placed',
+  //   7: 'Pickup Order Accepted',
+  //   8: 'Pickup Order Ready',
+  //   9: 'Pickup Order Completed',
+  //   10: 'Order Cancelled',
+  // };
 
   static int get deliveryPlaced => 1;
   static int get deliveryAccepted => 2;
@@ -38,54 +140,4 @@ class OrderStatus {
   static int get pickupReady => 8;
   static int get pickupCompleted => 9;
   static int get cancelled => 10;
-
-  static String getStatusDescription(int currentStatus) {
-    return _currentStatusDescription[currentStatus] ?? 'Unknown';
-  }
-
-  static String getButtonText(int currentStatus) {
-    switch (currentStatus) {
-      case 1:
-      case 6:
-        return 'Accept Order';
-      case 2:
-      case 7:
-        return 'Order is Prepared';
-      case 3:
-        return 'Order is In Route';
-      case 4:
-      case 8:
-        return 'Order is Picked Up';
-      case 5:
-      case 9:
-        return 'Go Back';
-      case 10:
-        return 'Order is Cancelled';
-      default:
-        return 'Go Back';
-    }
-  }
-
-  /*  static String currentOrderStatusShort(String status) {
-    switch (status) {
-      case 1:
-      case 6:
-        return 'Placed';
-      case 2:
-      case 7:
-        return 'Accepted';
-      case 3:
-      case 8:
-        return 'Ready';
-      case 4:
-        return 'In Route';
-      case 5:
-      case 9:
-        return 'Completed';
-      case 10:
-        return 'Cancelled';
-      default:
-        return 'Status Unavailable';
-    }
-  } */
 }
