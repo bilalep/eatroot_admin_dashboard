@@ -23,75 +23,72 @@ class ItemsExpansionPanelList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         final item = orderDetail.items![index];
-        return IgnorePointer(
-          ignoring: item.attributes == null || item.attributes!.isEmpty,
-          child: ListTileTheme(
-            dense: true,
-            child: ExpansionTile(
-              expandedCrossAxisAlignment: CrossAxisAlignment.start,
-              title: Row(
-                children: [
-                  Container(
-                    constraints: const BoxConstraints(
-                      minWidth: 15,
+        return ListTileTheme(
+          dense: true,
+          child: ExpansionTile(
+            expandedCrossAxisAlignment: CrossAxisAlignment.start,
+            title: Row(
+              children: [
+                Container(
+                  constraints: const BoxConstraints(
+                    minWidth: 15,
+                  ),
+                  // width: 15,
+                  child: Text(
+                    '${item.quantity}',
+                    style: AppTextStyles.mediumMedium(),
+                  ),
+                ),
+                Text(
+                  ' x ${item.menuName}',
+                  style: AppTextStyles.mediumMedium(),
+                ),
+                const SizedBox(
+                  width: 3,
+                ),
+                if (item.attributes!.isNotEmpty)
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Icon(
+                      Icons.info_outline,
+                      color: kColorBlack,
+                      size: 15,
                     ),
-                    // width: 15,
-                    child: Text(
-                      '${item.quantity}',
-                      style: kTSMedium18Black,
-                    ),
                   ),
-                  Text(
-                    ' x ${item.menuName}',
-                    style: kTSMedium18Black,
-                  ),
-                  const SizedBox(
-                    width: 3,
-                  ),
-                  if (item.attributes!.isNotEmpty)
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Icon(
-                        Icons.info_outline,
-                        color: kColorBlack,
-                        size: 15,
-                      ),
-                    ),
-                ],
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '${item.total ?? ''} AED',
-                    style: kTSMedium15Black,
-                  ),
-                ],
-              ),
-              children: item.attributes!.isEmpty
-                  ? const []
-                  : [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, bottom: 8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: item.attributes!
-                              .map(
-                                (e) => Text(
-                                  ' - ${e?.attribute}',
-                                  style: kTSMedium13Black,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ),
-                    ],
-              /* onExpansionChanged: (isOpen) {
-              setState(() {
-                _isOpen[index] = isOpen;
-              });
-            }, */
+              ],
             ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '${item.total ?? ''} AED',
+                  style: AppTextStyles.semiBoldMedium(),
+                ),
+              ],
+            ),
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 16, bottom: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: item.attributes!.isEmpty
+                      ? [Text('No Add ons!', style: AppTextStyles.mediumBody())]
+                      : item.attributes!
+                          .map(
+                            (e) => Text(
+                              ' - ${e?.attribute}',
+                              style: AppTextStyles.mediumBody(),
+                            ),
+                          )
+                          .toList(),
+                ),
+              ),
+            ],
+            /* onExpansionChanged: (isOpen) {
+            setState(() {
+              _isOpen[index] = isOpen;
+            });
+          }, */
           ),
         );
       },
