@@ -25,8 +25,7 @@ class OrderBillColumn extends StatelessWidget {
         _buildTableRow(
           'Total',
           '${orderDetail.finalAmount} AED',
-          valueStyle:
-              AppTextStyles.semiBoldExtraLarge(color: kColorPrimaryPink),
+          valueStyle: AppTextStyles.semiBoldLarge(color: kColorPrimaryPink),
         ),
       ],
     );
@@ -40,14 +39,14 @@ class OrderBillColumn extends StatelessWidget {
     return TableRow(
       children: [
         SizedBox(
-          height: 33,
+          height: 32,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title ?? '',
-                style: AppTextStyles.mediumLarge(
+                style: AppTextStyles.mediumMedium(
                   color: kColorBlack.withOpacity(0.7),
                 ),
               ),
@@ -55,14 +54,14 @@ class OrderBillColumn extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 33,
+          height: 32,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 value ?? '-',
-                style: valueStyle ?? AppTextStyles.semiBoldLarge(),
+                style: valueStyle ?? AppTextStyles.semiBoldMedium(),
                 textAlign: TextAlign.end,
               ),
             ],

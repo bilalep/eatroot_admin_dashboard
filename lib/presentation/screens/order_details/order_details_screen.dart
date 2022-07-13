@@ -96,7 +96,8 @@ class OrderDetailsScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Expanded(
+                            Padding(
+                              padding: const EdgeInsets.all(16),
                               child: ItemDetailsContainer(
                                 orderDetail: orderDetail,
                               ),

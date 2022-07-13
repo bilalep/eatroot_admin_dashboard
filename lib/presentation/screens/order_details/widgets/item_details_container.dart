@@ -17,8 +17,18 @@ class ItemDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: kColorWhite,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: kColorBlack.withOpacity(0.2),
+            blurRadius: 12,
+            // spreadRadius: 10,
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,31 +36,41 @@ class ItemDetailsContainer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(
               16,
-              8,
+              12,
               16,
               0,
             ),
-            child: Text(
-              'Items',
-              style: kTSOrderDetailScreenTitle1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Items',
+                  style: AppTextStyles.mediumMedium(
+                    color: kColorBlack.withOpacity(0.7),
+                  ),
+                ),
+                Text(
+                  'Price',
+                  style: AppTextStyles.mediumMedium(
+                    color: kColorBlack.withOpacity(0.7),
+                  ),
+                )
+              ],
             ),
           ),
           ItemsExpansionPanelList(
             orderDetail: orderDetail,
           ),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: 48, vertical: 12),
             child: DottedDivider(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: OrderBillColumn(orderDetail: orderDetail),
           ),
           const SizedBox(
-            width: 16,
-          ),
-          const SizedBox(
-            height: 8,
+            height: 16,
           ),
         ],
       ),
