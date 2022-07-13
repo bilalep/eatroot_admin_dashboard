@@ -15,7 +15,7 @@
 //     return Container(
 //       padding: const EdgeInsets.all(12),
 //       decoration: BoxDecoration(
-//         color: Colors.white,
+//         color: kColorWhite,
 //         borderRadius: BorderRadius.circular(12),
 //       ),
 //       child: Column(

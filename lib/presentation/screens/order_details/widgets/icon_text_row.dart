@@ -22,7 +22,7 @@ class IconTextRow extends StatelessWidget {
           radius: 14,
           child: Icon(
             iconData,
-            color: Colors.white,
+            color: kColorWhite,
             size: 20,
           ),
         ),
@@ -33,10 +33,10 @@ class IconTextRow extends StatelessWidget {
           child: Tooltip(
             message: text,
             child: Padding(
-              padding: const EdgeInsets.only(top: 2),
+              padding: const EdgeInsets.only(top: 4),
               child: Text(
                 buildMultiLineText(text),
-                style: kTSMedium15Black,
+                style: AppTextStyles.mediumBody(),
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
               ),

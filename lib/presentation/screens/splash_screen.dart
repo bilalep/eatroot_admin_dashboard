@@ -23,8 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final liveOrderProvider = Provider.of<LiveOrderProvider>(context);
     if (await LocalStorageService.isLoggedIn()) {
       kBearerToken = await LocalStorageService.getToken() ?? '';
+      kUserName = await LocalStorageService.getUserName() ?? '';
       unawaited(liveOrderProvider.getLiveOrderListFromService());
-      await navigator.pushReplacementNamed(LiveOrderListScreen.routeName);
+      await navigator.pushReplacementNamed(OrderListScreen.routeName);
     } else {
       await navigator.pushReplacementNamed(LoginScreen.routeName);
     }

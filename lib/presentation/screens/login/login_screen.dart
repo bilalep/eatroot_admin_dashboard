@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
     if (authProvider.isAuthenticated) {
       unawaited(liveOrderProvider.getLiveOrderListFromService());
       await nav.pushReplacementNamed(
-        LiveOrderListScreen.routeName,
+        OrderListScreen.routeName,
       );
     } else {
       await showDialog<AlertDialog>(

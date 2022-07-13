@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_test/providers/auth_provider.dart';
+import 'package:tech_test/utils/colors.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({
@@ -30,14 +31,14 @@ class LoginButton extends StatelessWidget {
                       width: 20,
                       child: CircularProgressIndicator(
                         backgroundColor: Colors.black,
-                        color: Colors.white,
+                        color: kColorWhite,
                         strokeWidth: 3,
                       ),
                     )
                   : const Text(
                       'LOG IN',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: kColorWhite,
                         // fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),

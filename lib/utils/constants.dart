@@ -3,6 +3,7 @@ import 'package:tech_test/utils/colors.dart';
 
 const endpoint = 'https://api.dashboard.eatroot.io/api';
 String kBearerToken = '';
+String kUserName = '';
 
 const kDivider = Divider(
   thickness: 2,
