@@ -87,10 +87,13 @@ class OrderDetailsScreen extends StatelessWidget {
                                         .capitalize(),
                                   ),
                                   const Spacer(),
-                                  Text(
-                                    buildTimeAgoText(
-                                      time: orderDetail.orderedAtFormatted,
-                                      defaultValue: '-',
+                                  Tooltip(
+                                    message: orderDetail.orderedAt ?? '',
+                                    child: Text(
+                                      buildTimeAgoText(
+                                        time: orderDetail.orderedAtFormatted,
+                                        defaultValue: '-',
+                                      ),
                                     ),
                                   ),
                                 ],

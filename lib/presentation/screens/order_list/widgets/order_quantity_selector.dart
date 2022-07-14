@@ -32,27 +32,18 @@ class _OrderQuantitySelectorState extends State<OrderQuantitySelector> {
               children: [
                 Text(
                   'You have ',
-                  style: kTSOrderScreenSubTitleWhite,
+                  style: AppTextStyles.semiBoldExtraLarge(color: kColorWhite),
                 ),
                 Consumer<LiveOrderProvider>(
                   builder: (context, liveOrderProvider, _) {
                     return OrderQuantityAnimator(
                       endValue: liveOrderProvider.orderQuantity,
                     );
-                    // return Text(
-                    //   value
-                    //       .getNoOfOrderByStatusAndTime(
-                    //         dropdownSelectedStatus,
-                    //         dropdownSelectedTime,
-                    //       )
-                    //       .toString(),
-                    //   style: kTSOrderScreenSubTitleYellowBold,
-                    // );
                   },
                 ),
                 Text(
                   ' orders',
-                  style: kTSOrderScreenSubTitleWhite,
+                  style: AppTextStyles.semiBoldExtraLarge(color: kColorWhite),
                 ),
               ],
             ),

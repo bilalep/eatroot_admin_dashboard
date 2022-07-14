@@ -36,12 +36,16 @@ class ItemsExpansionPanelList extends StatelessWidget {
                   // width: 15,
                   child: Text(
                     '${item.quantity}',
-                    style: AppTextStyles.mediumMedium(),
+                    style: AppTextStyles.mediumMedium(
+                      color: kColorBlack.withOpacity(0.7),
+                    ),
                   ),
                 ),
                 Text(
                   ' x ${item.menuName}',
-                  style: AppTextStyles.mediumMedium(),
+                  style: AppTextStyles.mediumMedium(
+                    color: kColorBlack.withOpacity(0.7),
+                  ),
                 ),
                 const SizedBox(
                   width: 3,

@@ -50,7 +50,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
                       ),
                       Text(
                         'Hi, $kUserName',
-                        style: kTSOrderScreenSubTitle2,
+                        style: AppTextStyles.mediumMedium(
+                          color: kColorWhite.withOpacity(0.7),
+                        ),
                       ),
                       const SizedBox(
                         height: 8,
