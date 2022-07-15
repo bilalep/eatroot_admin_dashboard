@@ -50,7 +50,9 @@ class AuthProvider with ChangeNotifier {
       kBearerToken = baseUser!.token!;
       kUserName = baseUser!.user!.name ?? 'User';
     } else {
-      log('Authorization failed: ${response.reasonPhrase} ${response.statusCode}');
+      log(
+        'Authorization error: ${response.reasonPhrase} ${response.statusCode}',
+      );
     }
     _loading = false;
     notifyListeners();

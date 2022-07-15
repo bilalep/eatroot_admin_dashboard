@@ -21,7 +21,6 @@ class LocalStorageService {
   static Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     log('isLoggedIn called');
-    print(prefs.getString(kTokenKey));
     return prefs.getString(kTokenKey) != null;
   }
 

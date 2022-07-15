@@ -56,9 +56,6 @@ class Address extends Equatable {
         name: data['name'] == null
             ? null
             : NameAndAddress.fromMap(data['name'] as Map<String, dynamic>),
-        // address: data['address'] == null
-        //     ? null
-        //     : NameAndAddress.fromMap(data['address'] as Map<String, dynamic>),
         address: data['address'] == null
             ? null
             : NameAndAddress.fromMap(data['address'] as dynamic),

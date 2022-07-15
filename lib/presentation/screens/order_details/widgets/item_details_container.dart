@@ -16,7 +16,7 @@ class ItemDetailsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: kColorWhite,
         borderRadius: const BorderRadius.all(

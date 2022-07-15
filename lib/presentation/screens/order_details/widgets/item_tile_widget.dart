@@ -33,29 +33,3 @@ class ItemTileWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-/* if (orderItem.attributes!.isEmpty || orderItem.attributes == null)
-            const SizedBox()
-          else
-            SizedBox(
-              height: 20,
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return Text(
-                    orderItem.attributes![index]!.attribute ?? '',
-                    style: const TextStyle(color: Colors.black54),
-                  );
-                },
-                itemCount: orderItem.attributes!.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const Text(
-                    ' + ',
-                    style: TextStyle(color: Colors.black54),
-                  );
-                },
-                scrollDirection: Axis.horizontal,
-              ),
-            ), */

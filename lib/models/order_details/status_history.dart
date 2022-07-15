@@ -12,7 +12,7 @@ class StatusHistory extends Equatable {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [StatusHistory].
+  /// Parses the string and returns the resulting Json object as [StatusHistory]
   factory StatusHistory.fromJson(String data) {
     return StatusHistory.fromMap(json.decode(data) as Map<String, dynamic>);
   }

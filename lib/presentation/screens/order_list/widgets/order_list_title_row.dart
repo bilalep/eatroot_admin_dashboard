@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tech_test/presentation/screens/login/login_screen.dart';
-import 'package:tech_test/providers/auth_provider.dart';
+import 'package:tech_test/presentation/screens/settings_screen/settings_screen.dart';
 import 'package:tech_test/utils/colors.dart';
 import 'package:tech_test/utils/text_styles.dart';
 
@@ -28,9 +26,7 @@ class OrderListTitleRow extends StatelessWidget {
           iconSize: 40,
           // ignore: flutter_style_todos
           onPressed: () {
-            // TODO: Implement profile and logout
-            Provider.of<AuthProvider>(context, listen: false).signOut();
-            Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+            Navigator.of(context).pushNamed(SettingsScreen.routeName);
           },
         ),
       ],

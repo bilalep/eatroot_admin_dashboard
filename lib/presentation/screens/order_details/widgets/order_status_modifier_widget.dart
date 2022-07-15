@@ -12,60 +12,6 @@ class OrderStatusModifierWidget extends StatelessWidget {
     super.key,
   });
 
-  // Widget buildAcceptButton(
-  //   BuildContext context,
-  //   int orderId,
-  //   String orderType,
-  // ) {
-  //   return ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //       primary: kColorGreen,
-  //       textStyle: const TextStyle(color: kColorWhite),
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(10),
-  //       ),
-  //     ),
-  //     onPressed: ,
-  //     child: const Text('Accept'),
-  //   );
-  // }
-
-  Widget buildInRouteButton(BuildContext context, int orderId) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: kColorBlue,
-        textStyle: const TextStyle(color: kColorWhite),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      onPressed: () {
-        Provider.of<OrderDetailsProvider>(context, listen: false)
-            .changeOrderStatusBy1(
-          context,
-          OrderStatus.deliveryReady,
-          orderId,
-        );
-      },
-      child: const Text('In Route'),
-    );
-  }
-
-  Row buildInRouteButtonRow(BuildContext context, OrderDetail orderDetail) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          child: buildInRouteButton(
-            context,
-            orderDetail.id!,
-          ),
-        ),
-      ],
-    );
-  }
-
   Row buildAcceptButtonRow(BuildContext context, OrderDetail orderDetail) {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -109,31 +55,12 @@ class OrderStatusModifierWidget extends StatelessWidget {
     );
   }
 
-  Row _buildOrderFulfilledRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Icon(
-          Icons.check_circle,
-          size: 26,
-          color: kColorGreen,
-        ),
-        const SizedBox(
-          width: 2,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 2),
-          child: Text(
-            'Order Fulfilled',
-            style: AppTextStyles.semiBoldMedium(),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Container _buildOutlinedContainer(Color color, String text, IconData icon) {
-    return Container(
+  DecoratedBox _buildOutlinedContainer(
+    Color color,
+    String text,
+    IconData icon,
+  ) {
+    return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(
           color: color,
@@ -176,9 +103,6 @@ class OrderStatusModifierWidget extends StatelessWidget {
             orderDetail.statusEnum,
             orderDetail.orderingService,
           );
-          print('currentStatusEnum: ${orderDetail.statusEnum}');
-          print('orderingService: ${orderDetail.orderingService}');
-          print('currentStatusId: $currentStatusId');
           if (orderDetailsProvider.loading) {
             return const SizedBox(
               height: 20,
@@ -202,84 +126,116 @@ class OrderStatusModifierWidget extends StatelessWidget {
     BuildContext context,
     OrderDetail orderDetail,
   ) {
-    if (currentStatusId == OrderStatus.deliveryPlaced ||
-        currentStatusId == OrderStatus.pickupPlaced) {
-      return buildAcceptButtonRow(context, orderDetail);
-    } else if (currentStatusId == OrderStatus.deliveryAccepted ||
-        currentStatusId == OrderStatus.pickupAccepted) {
-      return StatusModifierButton(
-        buttonColor: kColorFlatBlue,
-        buttonText: 'Mark this order as Ready',
-        onPressed: () {
-          if (orderDetail.orderingService == 'Delivery') {
-            Provider.of<OrderDetailsProvider>(context, listen: false)
-                .changeOrderStatusBy1(
-              context,
-              OrderStatus.deliveryAccepted,
-              orderDetail.id!,
-            );
-          } else if (orderDetail.orderingService == 'Pickup') {
-            Provider.of<OrderDetailsProvider>(context, listen: false)
-                .changeOrderStatusBy1(
-              context,
-              OrderStatus.pickupAccepted,
-              orderDetail.id!,
-            );
-          }
-        },
-      );
-    } else if (currentStatusId == OrderStatus.deliveryReady) {
-      return StatusModifierButton(
-        buttonColor: kColorFlatViolet,
-        buttonText: 'Mark this order as In-Route',
-        onPressed: () {
+    switch (currentStatusId) {
+      case OrderStatus.pickupPlaced:
+      case OrderStatus.deliveryPlaced:
+        return buildAcceptButtonRow(context, orderDetail);
+
+      case OrderStatus.pickupAccepted:
+      case OrderStatus.deliveryAccepted:
+        return _buildReadyButton(orderDetail, context);
+
+      case OrderStatus.deliveryReady:
+        return _buildInRouteButton(context, orderDetail);
+
+      case OrderStatus.deliveryInRoute:
+      case OrderStatus.pickupReady:
+        return _buildCompletedButton(orderDetail, context);
+
+      case OrderStatus.deliveryCompleted:
+      case OrderStatus.pickupCompleted:
+        return _buildOutlinedContainer(
+          kColorGreen,
+          'Order Completed',
+          Icons.check_circle,
+        );
+
+      case OrderStatus.cancelled:
+        return _buildOutlinedContainer(
+          kColorFlatRed,
+          'Order Cancelled',
+          Icons.cancel_rounded,
+        );
+
+      default:
+        return _buildOutlinedContainer(
+          kColorFlatRed,
+          'Unknown Status',
+          Icons.error,
+        );
+    }
+  }
+
+  StatusModifierButton _buildCompletedButton(
+    OrderDetail orderDetail,
+    BuildContext context,
+  ) {
+    return StatusModifierButton(
+      onPressed: () {
+        if (orderDetail.orderingService == 'Delivery') {
           Provider.of<OrderDetailsProvider>(context, listen: false)
               .changeOrderStatusBy1(
             context,
-            OrderStatus.deliveryReady,
+            OrderStatus.deliveryInRoute,
             orderDetail.id!,
           );
-        },
-      );
-    } else if (currentStatusId == OrderStatus.deliveryInRoute ||
-        currentStatusId == OrderStatus.pickupReady) {
-      return StatusModifierButton(
-        onPressed: () {
-          if (orderDetail.orderingService == 'Delivery') {
-            Provider.of<OrderDetailsProvider>(context, listen: false)
-                .changeOrderStatusBy1(
-              context,
-              OrderStatus.deliveryInRoute,
-              orderDetail.id!,
-            );
-          } else if (orderDetail.orderingService == 'Pickup') {
-            Provider.of<OrderDetailsProvider>(context, listen: false)
-                .changeOrderStatusBy1(
-              context,
-              OrderStatus.pickupReady,
-              orderDetail.id!,
-            );
-          }
-        },
-        buttonText: 'Mark this order as Completed',
-        buttonColor: kColorFlatGreen,
-      );
-    } else if (currentStatusId == OrderStatus.deliveryCompleted ||
-        currentStatusId == OrderStatus.pickupCompleted) {
-      return _buildOutlinedContainer(
-        kColorGreen,
-        'Order Completed',
-        Icons.check_circle,
-      );
-    } else if (currentStatusId == OrderStatus.cancelled) {
-      return _buildOutlinedContainer(
-        kColorFlatRed,
-        'Order Cancelled',
-        Icons.cancel_rounded,
-      );
-    } else {
-      return const Text('Unknown');
-    }
+        } else if (orderDetail.orderingService == 'Pickup') {
+          Provider.of<OrderDetailsProvider>(context, listen: false)
+              .changeOrderStatusBy1(
+            context,
+            OrderStatus.pickupReady,
+            orderDetail.id!,
+          );
+        }
+      },
+      buttonText: 'Mark this order as Completed',
+      buttonColor: kColorFlatGreen,
+    );
+  }
+
+  StatusModifierButton _buildInRouteButton(
+    BuildContext context,
+    OrderDetail orderDetail,
+  ) {
+    return StatusModifierButton(
+      buttonColor: kColorFlatViolet,
+      buttonText: 'Mark this order as In-Route',
+      onPressed: () {
+        Provider.of<OrderDetailsProvider>(context, listen: false)
+            .changeOrderStatusBy1(
+          context,
+          OrderStatus.deliveryReady,
+          orderDetail.id!,
+        );
+      },
+    );
+  }
+
+  StatusModifierButton _buildReadyButton(
+    OrderDetail orderDetail,
+    BuildContext context,
+  ) {
+    return StatusModifierButton(
+      buttonColor: kColorFlatBlue,
+      buttonText: 'Mark this order as Ready',
+      onPressed: () {
+        if (orderDetail.orderingService == 'Delivery') {
+          Provider.of<OrderDetailsProvider>(context, listen: false)
+              .changeOrderStatusBy1(
+            context,
+            OrderStatus.deliveryAccepted,
+            orderDetail.id!,
+          );
+        } else if (orderDetail.orderingService == 'Pickup') {
+          Provider.of<OrderDetailsProvider>(context, listen: false)
+              .changeOrderStatusBy1(
+            context,
+            OrderStatus.pickupAccepted,
+            orderDetail.id!,
+          );
+        }
+      },
+    );
   }
 }
 

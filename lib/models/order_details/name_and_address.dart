@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 
@@ -7,7 +8,7 @@ class NameAndAddress extends Equatable {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [NameAndAddress].
+  /// Parses the string and returns the resulting Json object as [NameAndAddress]
   factory NameAndAddress.fromJson(String data) {
     return NameAndAddress.fromMap(json.decode(data) as Map<String, dynamic>);
   }
@@ -27,7 +28,7 @@ class NameAndAddress extends Equatable {
         en: data['en'] as String?,
       );
     } catch (e) {
-      print('NameAddress.fromMap exception: $e');
+      log('NameAddress.fromMap exception: $e');
       return NameAndAddress(
         ar: data as String?,
         en: data,

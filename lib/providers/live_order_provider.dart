@@ -54,35 +54,16 @@ class LiveOrderProvider extends ChangeNotifier {
   }
 
   void getNoOfOrderByStatusAndTime() {
-    print(
-      'status: $orderQuantitySelectedStatus, time: $orderQuantitySelectedTime',
-    );
     final statusList = getOrderListByStatus(orderQuantitySelectedStatus)
       ..removeWhere((element) {
         return !filterOrderByTime(orderQuantitySelectedTime).contains(element);
       });
     _orderQuantity = statusList.length;
-    print('_orderQuantity: $_orderQuantity');
   }
 
   List<Order> getOrderListByStatus(String status) {
     return orders.where((element) => element.status == status).toList();
   }
-
-  // void filterOrderList(String status) {
-  //   if (_selectedOrderStatusList.contains(status)) {
-  //     _selectedOrderStatusList.remove(status);
-  //   } else {
-  //     _selectedOrderStatusList.add(status);
-  //   }
-  //   final tempList = <Order>[];
-  //   for (final element in _selectedOrderStatusList) {
-  //     tempList.addAll(getOrderListByStatus(element));
-  //   }
-  //   _filteredOrderList = tempList;
-  //   print('filteredOrderList: ${_filteredOrderList.length}');
-  //   notifyListeners();
-  // }
 
   void filterOrderListByBoolList(List<bool> boolList) {
     final tempList = <Order>[];
@@ -106,7 +87,6 @@ class LiveOrderProvider extends ChangeNotifier {
       return b.orderAtFormatted!.compareTo(a.orderAtFormatted!);
     });
     _filteredOrderList = tempList.toSet().toList();
-    print('filteredOrderList: ${_filteredOrderList.length}');
     notifyListeners();
   }
 

@@ -78,16 +78,16 @@ class _OrderQuantitySelectorState extends State<OrderQuantitySelector> {
 }
 
 class OrderQuantityDropDown extends StatefulWidget {
-  OrderQuantityDropDown({
+  const OrderQuantityDropDown({
     super.key,
     required this.text,
     required this.itemList,
     required this.callBack,
   });
 
-  String text;
+  final String text;
   final List<String> itemList;
-  void Function(String) callBack;
+  final void Function(String) callBack;
 
   @override
   State<OrderQuantityDropDown> createState() => _OrderQuantityDropDownState();
@@ -107,10 +107,11 @@ class _OrderQuantityDropDownState extends State<OrderQuantityDropDown> {
           // style: kTSOrderScreenSubTitleYellow,
           style: AppTextStyles.semiBoldExtraLarge(color: kColorYellow),
           onChanged: (String? newValue) {
-            setState(() {
-              widget.text = newValue!;
-              widget.callBack(newValue);
-            });
+            widget.callBack(newValue!);
+            // setState(() {
+            //   widget.text = newValue!;
+
+            // });
           },
           items: widget.itemList.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(

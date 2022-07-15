@@ -25,7 +25,7 @@ class CurrentStatusDisplay extends StatelessWidget {
           style: kTSOrderDetailScreenTitle1,
         ),
         const SizedBox(height: 8),
-        Container(
+        DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: kColorOrderTileBG,

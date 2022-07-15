@@ -4,6 +4,7 @@ import 'package:tech_test/presentation/screens/login/login_screen.dart';
 import 'package:tech_test/presentation/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:tech_test/presentation/screens/order_details/order_details_screen.dart';
 import 'package:tech_test/presentation/screens/order_list/order_list_screen.dart';
+import 'package:tech_test/presentation/screens/settings_screen/settings_screen.dart';
 import 'package:tech_test/presentation/screens/splash_screen.dart';
 
 class CustomRoute {
@@ -25,6 +26,10 @@ class CustomRoute {
                   return const OrderListScreen();
                 case OrderDetailsScreen.routeName:
                   return const OrderDetailsScreen();
+                case NoInternetScreen.routeName:
+                  return const NoInternetScreen();
+                case SettingsScreen.routeName:
+                  return const SettingsScreen();
                 default:
                   return const SplashScreen();
               }

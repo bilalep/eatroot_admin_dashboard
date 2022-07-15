@@ -56,6 +56,9 @@ class OrderStatus {
     Status? status,
     String? orderMethod,
   ) {
+    if (status == Status.cancelled) {
+      return 10;
+    }
     if (orderMethod == 'Delivery') {
       switch (status) {
         case Status.placed:
@@ -68,8 +71,6 @@ class OrderStatus {
           return 4;
         case Status.completed:
           return 5;
-        case Status.cancelled:
-          return 10;
         default:
           throw Exception('Unknown delivery status enum: $status');
       }
@@ -83,8 +84,6 @@ class OrderStatus {
           return 8;
         case Status.completed:
           return 9;
-        case Status.cancelled:
-          return 10;
         default:
           throw Exception('Unknown pickup status name: $status');
       }
@@ -130,14 +129,14 @@ class OrderStatus {
   //   10: 'Order Cancelled',
   // };
 
-  static int get deliveryPlaced => 1;
-  static int get deliveryAccepted => 2;
-  static int get deliveryReady => 3;
-  static int get deliveryInRoute => 4;
-  static int get deliveryCompleted => 5;
-  static int get pickupPlaced => 6;
-  static int get pickupAccepted => 7;
-  static int get pickupReady => 8;
-  static int get pickupCompleted => 9;
-  static int get cancelled => 10;
+  static const int deliveryPlaced = 1;
+  static const int deliveryAccepted = 2;
+  static const int deliveryReady = 3;
+  static const int deliveryInRoute = 4;
+  static const int deliveryCompleted = 5;
+  static const int pickupPlaced = 6;
+  static const int pickupAccepted = 7;
+  static const int pickupReady = 8;
+  static const int pickupCompleted = 9;
+  static const int cancelled = 10;
 }

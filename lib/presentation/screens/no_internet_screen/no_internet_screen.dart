@@ -5,6 +5,8 @@ import 'package:tech_test/utils/text_styles.dart';
 class NoInternetScreen extends StatelessWidget {
   const NoInternetScreen({super.key});
 
+  static const routeName = 'no_internet_screen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
