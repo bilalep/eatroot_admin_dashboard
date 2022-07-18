@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_test/utils/colors.dart';
 import 'package:tech_test/utils/text_styles.dart';
 
 class RoundedTextBoxMedium extends StatelessWidget {
@@ -21,14 +22,18 @@ class RoundedTextBoxMedium extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 9,
-          vertical: 7,
+        padding: const EdgeInsets.fromLTRB(
+          6,
+          1,
+          6,
+          2,
         ),
         child: Center(
           child: Text(
             text,
-            style: kTSOrderTileSubTitle1,
+            style: AppTextStyles.semiBoldBody(
+              color: kColorWhite,
+            ),
           ),
         ),
       ),

@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_test/models/order_list/order.dart';
+import 'package:tech_test/presentation/core/widgets/rounded_text_box_medium.dart';
 import 'package:tech_test/presentation/core/widgets/rounded_text_box_small.dart';
 import 'package:tech_test/presentation/screens/order_details/order_details_screen.dart';
 import 'package:tech_test/providers/order_detail_provider.dart';
@@ -14,6 +16,130 @@ import 'package:tech_test/utils/text_styles.dart';
 
 class OrderListTile extends StatelessWidget {
   const OrderListTile({
+    super.key,
+    required this.order,
+  });
+
+  final Order order;
+
+  double get textOpacity => 0.8;
+
+  @override
+  Widget build(BuildContext context) {
+    return OpenContainer(
+      closedElevation: 2,
+      transitionDuration: const Duration(milliseconds: 600),
+      // transitionType: ContainerTransitionType.fadeThrough,
+      closedBuilder: (context, openContainer) {
+        return InkWell(
+          onTap: () async {
+            if (order.id != null) {
+              unawaited(
+                Provider.of<OrderDetailsProvider>(context, listen: false)
+                    .getOrderDetailsFromId(order.id!),
+              );
+              openContainer();
+              // await navigator.pushNamed(OrderDetailsScreen.routeName);
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '#${order.orderNo ?? '-'}',
+                      style: AppTextStyles.semiBoldMedium(
+                        color: kColorPrimaryPink,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    _IconTextRow(
+                      text: '${order.actualSubTotal} AED',
+                      icon: Icons.payments,
+                    ),
+                    const SizedBox(height: 3),
+                    _IconTextRow(
+                      icon: Icons.calendar_month,
+                      text: DateFormat.yMd()
+                          .add_jm()
+                          .format(order.orderAtFormatted ?? DateTime.now()),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    RoundedTextBoxMedium(
+                      color: OrderStatus.getStatusBoxColor(
+                        order.status ?? '',
+                      ),
+                      text: order.status?.capitalize() ?? '-',
+                    ),
+                    const SizedBox(height: 6),
+                    _IconTextRow(
+                      icon: order.orderingService == 'Delivery'
+                          ? Icons.local_shipping
+                          : Icons.local_dining,
+                      text: order.orderingService ?? '',
+                    ),
+                    const SizedBox(height: 2),
+                    _IconTextRow(
+                      icon: Icons.payment,
+                      text: order.paymentMethod?.trim() ?? '',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      openBuilder: (context, closedContainer) {
+        return const OrderDetailsScreen();
+      },
+    );
+  }
+}
+
+class _IconTextRow extends StatelessWidget {
+  const _IconTextRow({
+    super.key,
+    required this.icon,
+    required this.text,
+  });
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 16,
+          color: kColorBlack.withOpacity(0.8),
+        ),
+        const SizedBox(width: 6),
+        Text(
+          text,
+          style: AppTextStyles.semiBoldSmall(
+            color: kColorBlack.withOpacity(0.8),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class OrderListTileOld extends StatelessWidget {
+  const OrderListTileOld({
     super.key,
     required this.order,
   });
@@ -55,11 +181,11 @@ class OrderListTile extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    RoundedTextBoxSmall(
-                      color: OrderStatus.getStatusBoxColor(
-                        order.status ?? '',
+                    Text(
+                      order.channel?.trim() ?? '-',
+                      style: AppTextStyles.semiBoldBody(
+                        color: kColorBlack.withOpacity(0.6),
                       ),
-                      text: order.status?.capitalize() ?? '-',
                     ),
                     const SizedBox(height: 2),
                     Text(
@@ -81,29 +207,15 @@ class OrderListTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     RoundedTextBoxSmall(
-                      text: order.orderingService ?? '-',
-                      color: OrderStatus.getOrderTypeBoxColor(
-                        order.orderingService ?? '',
-                      ),
+                      text: order.paymentMethod ?? '-',
+                      color: kColorYellow,
                     ),
                     const SizedBox(height: 4),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(
-                          color: kColorBlue,
-                        ),
+                    RoundedTextBoxSmall(
+                      color: OrderStatus.getStatusBoxColor(
+                        order.status ?? '',
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 4,
-                        vertical: 2,
-                      ),
-                      child: Text(
-                        order.paymentMethod?.trim() ?? '-',
-                        style: AppTextStyles.semiBoldExtraSmall(
-                          color: kColorBlack.withOpacity(0.6),
-                        ),
-                      ),
+                      text: order.status?.capitalize() ?? '-',
                     ),
                   ],
                 ),
@@ -116,72 +228,6 @@ class OrderListTile extends StatelessWidget {
         return const OrderDetailsScreen();
       },
     );
-    // return Material(
-    //   color: kColorWhite,
-    //   shape: RoundedRectangleBorder(
-    //     borderRadius: BorderRadius.circular(10),
-    //   ),
-    //   elevation: 2,
-    //   child: InkWell(
-    //     onTap: () async {
-    //       if (orderList[index].id != null) {
-    //         final navigator = Navigator.of(context);
-    //         unawaited(
-    //           Provider.of<OrderDetailsProvider>(context, listen: false)
-    //               .getOrderDetailsFromId(orderList[index].id!),
-    //         );
-    //         await navigator.pushNamed(OrderDetailsScreen.routeName);
-    //       }
-    //     },
-    //     child: Padding(
-    //       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-    //       child: Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         children: [
-    //           Column(
-    //             crossAxisAlignment: CrossAxisAlignment.start,
-    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             mainAxisSize: MainAxisSize.min,
-    //             children: [
-    //               Text(
-    //                 '#${orderList[index].orderNo ?? '-'}',
-    //                 style: kTSOrderTileTitle1,
-    //               ),
-    //               const SizedBox(height: 10),
-    //               Text(
-    //                 orderList[index].channel?.trim() ?? '-',
-    //                 style: kTSOrderTileSubTitleSemiTrans,
-    //               ),
-    //               const SizedBox(height: 2),
-    //               Text(
-    //                 orderList[index].orderAt?.trim() ?? '-',
-    //                 style: kTSOrderTileSubTitleSemiTrans,
-    //               ),
-    //             ],
-    //           ),
-    //           Column(
-    //             crossAxisAlignment: CrossAxisAlignment.end,
-    //             children: [
-    //               Text(
-    //                 'AED ${orderList[index].actualSubTotal}',
-    //                 style: kTSOrderTileTitle1,
-    //               ),
-    //               const SizedBox(height: 4),
-    //               RoundedTextBoxSmall(
-    //                 text: orderList[index].paymentMethod ?? '-',
-    //                 color: kColorYellow,
-    //               ),
-    //               const SizedBox(height: 4),
-    //               RoundedTextBoxSmall(
-    //                 color: kColorPrimaryPink,
-    //                 text: orderList[index].status?.capitalize() ?? '-',
-    //               ),
-    //             ],
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
     // );
   }
 }
