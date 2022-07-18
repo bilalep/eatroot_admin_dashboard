@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_test/utils/colors.dart';
 import 'package:tech_test/utils/text_styles.dart';
 
 class RoundedTextBoxSmall extends StatelessWidget {
@@ -23,11 +24,13 @@ class RoundedTextBoxSmall extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 7,
-          vertical: 5,
+          vertical: 3,
         ),
         child: Text(
           text,
-          style: kTSOrderTileSubTitle2,
+          style: AppTextStyles.semiBoldExtraSmall(
+            color: kColorWhite,
+          ),
         ),
       ),
     );

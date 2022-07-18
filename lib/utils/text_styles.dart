@@ -204,7 +204,7 @@ TextStyle _montserratBold(double size, {Color color = kColorBlack}) {
     fontSize: size,
     fontWeight: FontWeight.w700,
     color: color,
-    height: 1.5,
+    height: 1.4,
   );
 }
 
@@ -213,7 +213,7 @@ TextStyle _montserratMedium(double size, {Color color = kColorBlack}) {
     fontSize: size,
     fontWeight: FontWeight.w500,
     color: color,
-    height: 1.5,
+    height: 1.4,
   );
 }
 
@@ -222,7 +222,7 @@ TextStyle _montserratRegular(double size, {Color color = kColorBlack}) {
     fontSize: size,
     fontWeight: FontWeight.w400,
     color: color,
-    height: 1.5,
+    height: 1.4,
   );
 }
 
@@ -234,6 +234,6 @@ TextStyle _montserratSemiBold(
     fontSize: size,
     fontWeight: FontWeight.w600,
     color: color,
-    height: 1.5,
+    height: 1.4,
   );
 }

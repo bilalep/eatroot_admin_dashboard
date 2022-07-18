@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_test/providers/auth_provider.dart';
 import 'package:tech_test/utils/colors.dart';
+import 'package:tech_test/utils/text_styles.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({
@@ -18,7 +19,10 @@ class LoginButton extends StatelessWidget {
       builder: (BuildContext context, authProvider, _) {
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.black,
+            primary: kColorPrimaryPink,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
           onPressed: onPressed,
           child: SizedBox(
@@ -30,17 +34,15 @@ class LoginButton extends StatelessWidget {
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator(
-                        backgroundColor: Colors.black,
+                        backgroundColor: Colors.transparent,
                         color: kColorWhite,
                         strokeWidth: 3,
                       ),
                     )
-                  : const Text(
+                  : Text(
                       'LOG IN',
-                      style: TextStyle(
+                      style: AppTextStyles.boldMedium(
                         color: kColorWhite,
-                        // fontSize: 16,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
             ),

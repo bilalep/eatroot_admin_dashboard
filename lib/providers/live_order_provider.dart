@@ -87,6 +87,7 @@ class LiveOrderProvider extends ChangeNotifier {
       return b.orderAtFormatted!.compareTo(a.orderAtFormatted!);
     });
     _filteredOrderList = tempList.toSet().toList();
+
     notifyListeners();
   }
 

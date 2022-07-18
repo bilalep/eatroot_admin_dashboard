@@ -19,11 +19,14 @@ class OrderDetailsScreen extends StatelessWidget {
   static const routeName = 'order_details';
 
   String buildTimeAgoText({DateTime? time, required String defaultValue}) {
+    //TODO check time zone and adjust time ago
+    final dateTime = DateTime.now();
     if (time == null) {
       return defaultValue;
     } else {
       return timeago.format(
         time,
+        clock: DateTime.now().subtract(dateTime.timeZoneOffset),
       );
     }
   }
@@ -48,8 +51,7 @@ class OrderDetailsScreen extends StatelessWidget {
                     color: kColorPrimaryPink,
                     child: Stack(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ListView(
                           children: [
                             TopContainerPink(
                               padding: const EdgeInsets.symmetric(
@@ -106,6 +108,9 @@ class OrderDetailsScreen extends StatelessWidget {
                                 orderDetail: orderDetail,
                               ),
                             ),
+                            const SizedBox(
+                              height: 96,
+                            )
                           ],
                         ),
                         Positioned(
