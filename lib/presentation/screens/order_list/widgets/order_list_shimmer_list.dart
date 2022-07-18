@@ -9,75 +9,73 @@ class OrderListShimmerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            color: kColorWhite,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          height: 94,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
+    return SliverFixedExtentList(
+      itemExtent: 108,
+      delegate: SliverChildBuilderDelegate(
+        childCount: 10,
+        (context, index) => Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: Container(
+            decoration: BoxDecoration(
+              color: kColorWhite,
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    ShimmerWidget.rectangular(
-                      width: 62,
-                      height: 16,
-                    ),
-                    SizedBox(height: 12),
-                    ShimmerWidget.rectangular(
-                      width: 35,
-                      height: 14,
-                    ),
-                    SizedBox(height: 4),
-                    ShimmerWidget.rectangular(
-                      width: 130,
-                      height: 14,
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const [
-                    ShimmerWidget.rectangular(
-                      width: 87,
-                      height: 16,
-                    ),
-                    SizedBox(height: 5),
-                    ShimmerWidget.rectangular(
-                      width: 97,
-                      height: 22,
-                      radius: 5,
-                    ),
-                    SizedBox(height: 4),
-                    ShimmerWidget.rectangular(
-                      width: 97,
-                      height: 22,
-                      radius: 5,
-                    ),
-                  ],
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      ShimmerWidget.rectangular(
+                        width: 62,
+                        height: 16,
+                      ),
+                      SizedBox(height: 12),
+                      ShimmerWidget.rectangular(
+                        width: 35,
+                        height: 14,
+                      ),
+                      SizedBox(height: 4),
+                      ShimmerWidget.rectangular(
+                        width: 130,
+                        height: 14,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: const [
+                      ShimmerWidget.rectangular(
+                        width: 87,
+                        height: 15,
+                      ),
+                      SizedBox(height: 5),
+                      ShimmerWidget.rectangular(
+                        width: 97,
+                        height: 20,
+                        radius: 5,
+                      ),
+                      SizedBox(height: 4),
+                      ShimmerWidget.rectangular(
+                        width: 97,
+                        height: 20,
+                        radius: 5,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        );
-      },
-      separatorBuilder: (context, index) {
-        return const SizedBox(
-          height: 16,
-        );
-      },
-      itemCount: 10,
+        ),
+      ),
     );
   }
 }

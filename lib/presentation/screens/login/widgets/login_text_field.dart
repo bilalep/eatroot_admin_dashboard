@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tech_test/utils/colors.dart';
+import 'package:tech_test/utils/text_styles.dart';
 
 class LoginTextField extends StatefulWidget {
   const LoginTextField({
@@ -31,20 +33,26 @@ class _LoginTextFieldState extends State<LoginTextField> {
       controller: widget.controller,
       obscureText: passwordVisible,
       decoration: InputDecoration(
+        isDense: true,
         hintText: widget.labelText,
-        hintStyle: const TextStyle(
-          color: Colors.grey,
-          fontSize: 16,
+        hintStyle: AppTextStyles.semiBoldBody(
+          color: kColorBlack.withOpacity(0.5),
         ),
-        border: const UnderlineInputBorder(),
-        enabledBorder: const UnderlineInputBorder(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Colors.black54,
+            width: 1.3,
+            color: kColorBlack.withOpacity(0.3),
           ),
         ),
-        focusedBorder: const UnderlineInputBorder(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            width: 2,
+            width: 1.3,
+            color: kColorPrimaryPink.withOpacity(0.7),
           ),
         ),
         suffixIcon: widget.isObscure
@@ -61,7 +69,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
               )
             : const SizedBox(),
       ),
-      style: Theme.of(context).textTheme.bodyText1,
+      style: AppTextStyles.mediumBody(),
     );
   }
 }

@@ -12,15 +12,13 @@ import 'package:tech_test/utils/extensions.dart';
 import 'package:tech_test/utils/order_status.dart';
 import 'package:tech_test/utils/text_styles.dart';
 
-class LiveOrderListTile extends StatelessWidget {
-  const LiveOrderListTile({
+class OrderListTile extends StatelessWidget {
+  const OrderListTile({
     super.key,
-    required this.orderList,
-    required this.index,
+    required this.order,
   });
 
-  final int index;
-  final List<Order> orderList;
+  final Order order;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +29,10 @@ class LiveOrderListTile extends StatelessWidget {
       closedBuilder: (context, openContainer) {
         return InkWell(
           onTap: () async {
-            if (orderList[index].id != null) {
+            if (order.id != null) {
               unawaited(
                 Provider.of<OrderDetailsProvider>(context, listen: false)
-                    .getOrderDetailsFromId(orderList[index].id!),
+                    .getOrderDetailsFromId(order.id!),
               );
               openContainer();
               // await navigator.pushNamed(OrderDetailsScreen.routeName);
@@ -51,18 +49,24 @@ class LiveOrderListTile extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '#${orderList[index].orderNo ?? '-'}',
-                      style: kTSOrderTileTitle1,
+                      '#${order.orderNo ?? '-'}',
+                      style: AppTextStyles.semiBoldMedium(
+                        color: kColorPrimaryPink,
+                      ),
                     ),
-                    const SizedBox(height: 10),
-                    Text(
-                      orderList[index].channel?.trim() ?? '-',
-                      style: kTSOrderTileSubTitleSemiTrans,
+                    const SizedBox(height: 6),
+                    RoundedTextBoxSmall(
+                      color: OrderStatus.getStatusBoxColor(
+                        order.status ?? '',
+                      ),
+                      text: order.status?.capitalize() ?? '-',
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      orderList[index].orderAt?.trim() ?? '-',
-                      style: kTSOrderTileSubTitleSemiTrans,
+                      order.orderAt?.trim() ?? '-',
+                      style: AppTextStyles.semiBoldBody(
+                        color: kColorBlack.withOpacity(0.6),
+                      ),
                     ),
                   ],
                 ),
@@ -70,20 +74,36 @@ class LiveOrderListTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'AED ${orderList[index].actualSubTotal}',
-                      style: kTSOrderTileTitle1,
-                    ),
-                    const SizedBox(height: 4),
-                    RoundedTextBoxSmall(
-                      text: orderList[index].paymentMethod ?? '-',
-                      color: kColorYellow,
-                    ),
-                    const SizedBox(height: 4),
-                    RoundedTextBoxSmall(
-                      color: OrderStatus.getStatusBoxColor(
-                        orderList[index].status ?? '',
+                      'AED ${order.actualSubTotal}',
+                      style: AppTextStyles.semiBoldMedium(
+                        color: kColorPrimaryPink,
                       ),
-                      text: orderList[index].status?.capitalize() ?? '-',
+                    ),
+                    const SizedBox(height: 4),
+                    RoundedTextBoxSmall(
+                      text: order.orderingService ?? '-',
+                      color: OrderStatus.getOrderTypeBoxColor(
+                        order.orderingService ?? '',
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: kColorBlue,
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 2,
+                      ),
+                      child: Text(
+                        order.paymentMethod?.trim() ?? '-',
+                        style: AppTextStyles.semiBoldExtraSmall(
+                          color: kColorBlack.withOpacity(0.6),
+                        ),
+                      ),
                     ),
                   ],
                 ),

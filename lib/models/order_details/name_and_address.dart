@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class NameAndAddress extends Equatable {
   const NameAndAddress({this.ar, this.en});
@@ -29,6 +30,10 @@ class NameAndAddress extends Equatable {
       );
     } catch (e) {
       log('NameAddress.fromMap exception: $e');
+      Sentry.captureException(
+        e,
+        stackTrace: StackTrace.current,
+      );
       return NameAndAddress(
         ar: data as String?,
         en: data,

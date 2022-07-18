@@ -109,6 +109,16 @@ class OrderStatus {
     }
   }
 
+  static Color getOrderTypeBoxColor(String orderType) {
+    if (orderType == 'Delivery') {
+      return kColorFlatBlue;
+    } else if (orderType == 'Pickup') {
+      return kColorFlatBlueGreen;
+    } else {
+      return kColorFlatBlue;
+    }
+  }
+
   static List<String> timeList = [
     'in last 24 hours',
     'in last 7 days',

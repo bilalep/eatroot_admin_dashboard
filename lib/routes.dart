@@ -21,7 +21,9 @@ class CustomRoute {
                 case SplashScreen.routeName:
                   return const SplashScreen();
                 case LoginScreen.routeName:
-                  return const LoginScreen();
+                  return LoginScreen();
+                case LoginSuccessScreen.routeName:
+                  return const LoginSuccessScreen();
                 case OrderListScreen.routeName:
                   return const OrderListScreen();
                 case OrderDetailsScreen.routeName:

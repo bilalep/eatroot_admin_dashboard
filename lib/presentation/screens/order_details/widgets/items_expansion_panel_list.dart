@@ -21,6 +21,7 @@ class ItemsExpansionPanelList extends StatelessWidget {
     return ListView.builder(
       itemCount: orderDetail.items!.length,
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final item = orderDetail.items![index];
         return ListTileTheme(
@@ -36,7 +37,7 @@ class ItemsExpansionPanelList extends StatelessWidget {
                   // width: 15,
                   child: Text(
                     '${item.quantity}',
-                    style: AppTextStyles.mediumMedium(
+                    style: AppTextStyles.boldMedium(
                       color: kColorBlack.withOpacity(0.7),
                     ),
                   ),

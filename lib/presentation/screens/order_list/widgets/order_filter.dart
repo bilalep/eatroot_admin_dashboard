@@ -65,32 +65,29 @@ class _OrderFilterState extends State<OrderFilter> {
                   vertical: 4,
                   horizontal: 4,
                 ),
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
-                  decoration: BoxDecoration(
-                    color: liveOrderProvider.isButtonSelectedList[index]
-                        ? kColorPrimaryPink
-                        : kColorWhite,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    border: const Border.fromBorderSide(
-                      BorderSide(
-                        color: kColorPrimaryPink,
-                        // width: 2,
-                      ),
+                child: Material(
+                  color: liveOrderProvider.isButtonSelectedList[index]
+                      ? kColorPrimaryPink
+                      : kColorWhite,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: const BorderSide(
+                      color: kColorPrimaryPink,
                     ),
                   ),
-                  child: Text(
-                    _buildButtonText(
-                      context,
-                      OrderStatus.orderStatusApiDefaults.indexOf(element),
-                      liveOrderProvider,
-                    ),
-                    style: AppTextStyles.semiBoldBody(
-                      color: liveOrderProvider.isButtonSelectedList[index]
-                          ? kColorWhite
-                          : kColorPrimaryPink,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
+                    child: Text(
+                      _buildButtonText(
+                        context,
+                        OrderStatus.orderStatusApiDefaults.indexOf(element),
+                        liveOrderProvider,
+                      ),
+                      style: AppTextStyles.semiBoldBody(
+                        color: liveOrderProvider.isButtonSelectedList[index]
+                            ? kColorWhite
+                            : kColorPrimaryPink,
+                      ),
                     ),
                   ),
                 ),
