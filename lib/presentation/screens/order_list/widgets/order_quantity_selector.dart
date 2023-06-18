@@ -20,6 +20,9 @@ class _OrderQuantitySelectorState extends State<OrderQuantitySelector> {
 
   String dropdownSelectedTime = OrderStatus.timeList[0];
 
+  TextStyle get textStyle =>
+      AppTextStyles.semiBoldExtraLarge(color: kColorWhite);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LiveOrderProvider>(
@@ -28,11 +31,10 @@ class _OrderQuantitySelectorState extends State<OrderQuantitySelector> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   'You have ',
-                  style: AppTextStyles.semiBoldExtraLarge(color: kColorWhite),
+                  style: textStyle,
                 ),
                 Consumer<LiveOrderProvider>(
                   builder: (context, liveOrderProvider, _) {
@@ -43,28 +45,35 @@ class _OrderQuantitySelectorState extends State<OrderQuantitySelector> {
                 ),
                 Text(
                   ' orders',
-                  style: AppTextStyles.semiBoldExtraLarge(color: kColorWhite),
+                  style: textStyle,
+                ),
+                const SizedBox(
+                  width: 8,
                 ),
               ],
             ),
             OrderQuantityDropDown(
               text: liveOrderProvider.orderQuantitySelectedStatus,
-              itemList: OrderStatus.orderStatusApiDefaults,
+              itemList: [
+                ...OrderStatus.orderStatusApiDefaults,
+                'yet to be fulfilled',
+              ],
               callBack: (newValue) {
                 setState(() {
                   liveOrderProvider.changeSelectedStatus(newValue);
                 });
               },
             ),
-            OrderQuantityDropDown(
-              text: liveOrderProvider.orderQuantitySelectedTime,
-              itemList: OrderStatus.timeList,
-              callBack: (newValue) {
-                setState(() {
-                  liveOrderProvider.changeSelectedTime(newValue);
-                });
-              },
-            ),
+
+            // OrderQuantityDropDown(
+            //   text: liveOrderProvider.orderQuantitySelectedTime,
+            //   itemList: OrderStatus.timeList,
+            //   callBack: (newValue) {
+            //     setState(() {
+            //       liveOrderProvider.changeSelectedTime(newValue);
+            //     });
+            //   },
+            // ),
             /* Text(
             'last 24 hours',
             style: kTextStyleOrderScreenSubTitleYellow,
@@ -83,29 +92,39 @@ class OrderQuantityDropDown extends StatefulWidget {
     required this.text,
     required this.itemList,
     required this.callBack,
+    this.textStyle,
   });
 
   final String text;
   final List<String> itemList;
   final void Function(String) callBack;
+  final TextStyle? textStyle;
 
   @override
   State<OrderQuantityDropDown> createState() => _OrderQuantityDropDownState();
 }
 
 class _OrderQuantityDropDownState extends State<OrderQuantityDropDown> {
+  double iconSize = 24;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 36,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          iconSize: 0,
+          iconSize: iconSize,
+          iconEnabledColor: kColorYellow,
           value: widget.text,
           elevation: 0,
           // isDense: true,
           // style: kTSOrderScreenSubTitleYellow,
-          style: AppTextStyles.semiBoldExtraLarge(color: kColorYellow),
+          style: widget.textStyle ??
+              AppTextStyles.boldExtraLarge(color: kColorYellow),
+          onTap: () {
+            setState(() {
+              iconSize = 0;
+            });
+          },
           onChanged: (String? newValue) {
             widget.callBack(newValue!);
             // setState(() {

@@ -55,18 +55,41 @@ class OrderListTile extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    RoundedTextBoxSmall(
-                      color: OrderStatus.getStatusBoxColor(
-                        order.status ?? '',
-                      ),
-                      text: order.status?.capitalize() ?? '-',
+                    Row(
+                      children: [
+                        Icon(
+                          order.orderingService == 'Delivery'
+                              ? Icons.local_shipping
+                              : Icons.fastfood,
+                          color: kColorBlack.withOpacity(0.7),
+                          size: 18,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          order.orderingService ?? '-',
+                          style: AppTextStyles.semiBoldBody(
+                            color: kColorBlack.withOpacity(0.7),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 2),
-                    Text(
-                      order.orderAt?.trim() ?? '-',
-                      style: AppTextStyles.semiBoldBody(
-                        color: kColorBlack.withOpacity(0.6),
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.calendar_month_sharp,
+                          color: kColorBlack.withOpacity(0.7),
+                          size: 18,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${order.orderAtFormatted?.day}-${order.orderAtFormatted?.month}-${order.orderAtFormatted?.year} ${order.orderAtFormatted?.hour}:${order.orderAtFormatted?.minute}',
+                          style: AppTextStyles.semiBoldBody(
+                            color: kColorBlack.withOpacity(0.7),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -81,30 +104,16 @@ class OrderListTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     RoundedTextBoxSmall(
-                      text: order.orderingService ?? '-',
-                      color: OrderStatus.getOrderTypeBoxColor(
-                        order.orderingService ?? '',
+                      color: OrderStatus.getStatusBoxColor(
+                        order.status ?? '',
                       ),
+                      text: order.status?.capitalize() ?? '-',
                     ),
                     const SizedBox(height: 4),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(
-                          color: kColorBlue,
-                        ),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 4,
-                        vertical: 2,
-                      ),
-                      child: Text(
-                        order.paymentMethod?.trim() ?? '-',
-                        style: AppTextStyles.semiBoldExtraSmall(
-                          color: kColorBlack.withOpacity(0.6),
-                        ),
-                      ),
-                    ),
+                    RoundedTextBoxSmall(
+                      color: kColorYellow,
+                      text: order.paymentMethod?.trim() ?? '-',
+                    )
                   ],
                 ),
               ],

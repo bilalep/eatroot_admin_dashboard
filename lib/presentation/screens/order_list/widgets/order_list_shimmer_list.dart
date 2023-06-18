@@ -14,7 +14,7 @@ class OrderListShimmerList extends StatelessWidget {
       delegate: SliverChildBuilderDelegate(
         childCount: 10,
         (context, index) => Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
           child: Container(
             decoration: BoxDecoration(
               color: kColorWhite,
@@ -39,12 +39,12 @@ class OrderListShimmerList extends StatelessWidget {
                       ),
                       SizedBox(height: 12),
                       ShimmerWidget.rectangular(
-                        width: 35,
+                        width: 50,
                         height: 14,
                       ),
                       SizedBox(height: 4),
                       ShimmerWidget.rectangular(
-                        width: 130,
+                        width: 110,
                         height: 14,
                       ),
                     ],
@@ -58,7 +58,7 @@ class OrderListShimmerList extends StatelessWidget {
                       ),
                       SizedBox(height: 5),
                       ShimmerWidget.rectangular(
-                        width: 97,
+                        width: 80,
                         height: 20,
                         radius: 5,
                       ),

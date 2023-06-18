@@ -17,7 +17,7 @@ class LiveOrderProvider extends ChangeNotifier {
   List<Order> get filteredOrderList => _filteredOrderList;
 
   String orderQuantitySelectedTime = OrderStatus.timeList[0];
-  String orderQuantitySelectedStatus = OrderStatus.orderStatusApiDefaults[0];
+  String orderQuantitySelectedStatus = 'yet to be fulfilled';
   int _orderQuantity = 0;
   int get orderQuantity => _orderQuantity;
 
@@ -37,6 +37,7 @@ class LiveOrderProvider extends ChangeNotifier {
       _orders = tempOrderList;
       filterOrderListByBoolList(isButtonSelectedList);
     }
+    getNoOfOrderByStatus();
     _loading = false;
     notifyListeners();
   }
@@ -49,7 +50,7 @@ class LiveOrderProvider extends ChangeNotifier {
 
   void changeSelectedStatus(String status) {
     orderQuantitySelectedStatus = status;
-    getNoOfOrderByStatusAndTime();
+    getNoOfOrderByStatus();
     notifyListeners();
   }
 
@@ -63,6 +64,16 @@ class LiveOrderProvider extends ChangeNotifier {
 
   List<Order> getOrderListByStatus(String status) {
     return orders.where((element) => element.status == status).toList();
+  }
+
+  void getNoOfOrderByStatus() {
+    if (orderQuantitySelectedStatus == 'yet to be fulfilled') {
+      _orderQuantity = _orders.length;
+      return;
+    }
+    _orderQuantity = getOrderListByStatus(orderQuantitySelectedStatus).length;
+
+    notifyListeners();
   }
 
   void filterOrderListByBoolList(List<bool> boolList) {

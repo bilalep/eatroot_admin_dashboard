@@ -68,7 +68,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                       ),
                       const OrderQuantitySelector(),
                       const SizedBox(
-                        height: 16,
+                        height: 20,
                       ),
                     ],
                   ),
@@ -121,7 +121,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                             icon: CustomPaint(
                               size: Size(
                                 _iconWidth,
-                                (_iconWidth * 0.8192090395480226).toDouble(),
+                                _iconWidth * 0.8192090395480226,
                               ),
                               painter: NoOrdersIconPainter(),
                             ),
@@ -148,7 +148,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                               reverseCurve: Curves.easeInOut,
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
+                              padding: const EdgeInsets.only(bottom: 12),
                               child: OrderListTile(
                                 order: order,
                               ),
